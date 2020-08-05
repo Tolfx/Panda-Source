@@ -1,0 +1,8 @@
+/.vs
+/node_modules
+/Prototype
+/test
+/json
+logs.txt
+/dist
+config.json
