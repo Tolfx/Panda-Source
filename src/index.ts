@@ -85,14 +85,26 @@ console.log(stripIndent`
     ++      +----+  +-----+  +         X     X`);
 
 //Events starts here
-checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
-checkcomm.checker("https://bans.panda-community.com/index.php?p=commslist");
-activity.checker("https://www.panda-community.com/whats-new/latest-activity");
-shoutbox.watchNew();
-
-log.normal('Starting \"latestActivity\" event.');
-log.normal('Starting \"checkComm\" event.');
-log.normal("Starting \"checkBan\" event.");
-//log.normal("Starting \"newThread\" event.");
+if(config.Boolean.Enable_Shoutbox_Event) {
+    shoutbox.watchNew();
+    log.normal("Starting \"Shoutbox\" event.");
+}
+if(config.Boolean.Enable_NewThread_Event) {
+    newthread.watchNew();
+    log.normal("Starting \"newThread\" event.");
+}
+if(config.Boolean.Enable_LatestActivity_Event) {
+    activity.checker("https://www.panda-community.com/whats-new/latest-activity");
+    log.normal('Starting \"latestActivity\" event.');
+}
+if(config.Boolean.Enable_CheckComm_Event) {
+    checkcomm.checker("https://bans.panda-community.com/index.php?p=commslist");
+    log.normal('Starting \"checkComm\" event.');
+}
+if(config.Boolean.Enable_CheckBans_Event) {
+    checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
+    log.normal("Starting \"checkBan\" event.");
+}
 //Event end
+
 client.login(config.General.tokenDiscord);
