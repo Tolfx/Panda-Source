@@ -1,0 +1,31 @@
+{
+    "General": {
+        "prefix": "!",
+        "discord_Owner_ID": "",
+        "tokenDiscord": ""
+    },
+
+    "Discord": {
+        "logs": "",
+        "ShoutboxURL": "",
+        "LatestActivity": "",
+        "NewComms": "",
+        "NewBans": ""
+    },
+
+    "Steam": {
+        "name": "",
+        "password": "",
+        "sharedSecret": ""
+    },
+    
+    "profilePicturePath": "",
+    "underCoverProfile": "",
+    "numberOfPics": 0,
+
+    "names": 
+    [
+		"name1",
+		"name2"
+    ]
+}
