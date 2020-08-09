@@ -78,8 +78,6 @@ export default class CheckBans {
                 let result = this.newBan($);
                 const webhookClient = new WebhookClient(D_ID, D_Token);
                 log.normal(`Found: ${result.length} new bans..`, true);
-                for(var j = 0; j < result.length; ++j) {
-                    fs.writeFileSync(path, JSON.stringify(result[0]));
 
                     for(var j = 0; j < result.length; ++j) {
                         fs.writeFileSync(path, JSON.stringify(result[0]));
@@ -101,10 +99,9 @@ export default class CheckBans {
                         embeds: [embed],
                     });
                     }
-                }
             };
         });
-    }, 60000);
+    }, 600000);
     };
 
 }; //End of class

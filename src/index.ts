@@ -21,6 +21,9 @@ import CheckComm from "./events/checkComm";
 import { CustomLogger } from "./lib/customLogs";
 import {shoutBox} from "./events/shoutbox";
 import config from '../config.json'
+import {getchat} from "./events/getchat"
+
+
 
 const prefix = config.General.prefix;
 
@@ -104,7 +107,8 @@ if(config.Boolean.Enable_CheckComm_Event) {
 if(config.Boolean.Enable_CheckBans_Event) {
     checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
     log.normal("Starting \"checkBan\" event.");
-}
+};
+getchat();
 //Event end
 
 client.login(config.General.tokenDiscord);

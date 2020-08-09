@@ -3,8 +3,6 @@
 This will make my profile normal again..
 
 */
-
-
 import Steam from "../../steamHandler/steamHandler"
 import config from "../../../config.json";
 const puppeteer = require('puppeteer');
@@ -177,15 +175,15 @@ private async NormalProfileChange(page) {
 
     const [fileChooser] = await Promise.all([
         page.waitForFileChooser(),
-        page.click('#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.avatar_AvatarDialogBody_39Ovv > div.avatar_AvatarDialogTop_aCrGP > div.avatar_AvatarDialogUploadArea_22Ena > button') // some button that triggers file selection
-      ]);
-      await fileChooser.accept([config.profilePicturePath]);
+        page.click('#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.avatar_AvatarDialogBody_39Ovv > div.avatar_AvatarDialogTop_aCrGP > div.avatar_AvatarDialogUploadArea_22Ena > button')
+    ]);
 
-      await page.waitFor(2000);
+    await fileChooser.accept([config.profilePicturePath]);
+    await page.waitFor(2000);
 
     // Clicks on Save
-    await page.click("#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary");
+    await page.click(`#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary`);
     
 };
 
-};
+};//End of class

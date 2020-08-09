@@ -189,7 +189,7 @@ private async goUndercover(page) {
     await page.waitFor(2000);
 
     // Clicks on Save
-    await page.click("#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary");
+    await page.click(`#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary`);
 
 }
 

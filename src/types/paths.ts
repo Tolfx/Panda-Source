@@ -12,4 +12,5 @@ export default class Paths {
     static NewThread = 'json/newThread.json';
     static toxicBrain = "json/toxicBrain.json";
     static Config = "config.json";
+    static EU_Dodgeball_04 = "json/chatlog_dodgeball04.json";
 };

@@ -31,8 +31,8 @@ export class latestActivity
 
                 let name = 
                 $('#top > div.p-body > div > div > div > div > div > div.block > div > ul > li:nth-child(1) > div > div > div.contentRow-title')
-                .text().
-                trim();
+                .text()
+                .trim();
 
                 let user = 
                 $('#top > div.p-body > div > div > div > div > div > div.block > div > ul > li:nth-child(1) > div > div > div.contentRow-title > a:nth-child(1)')

@@ -24,7 +24,7 @@ export class CustomLogger
         });
       };
 
-      public warn(body: string, discord?: boolean)
+      public warn(body: any, discord?: boolean)
       {
         let d = new Date();
           console.log(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn:`, colors.red(body));
@@ -39,7 +39,7 @@ export class CustomLogger
             "#D75040");
       };
 
-      public normal(body: string, discord?: boolean)
+      public normal(body: any, discord?: boolean)
       {
         let d = new Date();
         console.log(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose:`, colors.cyan(body));

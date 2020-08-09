@@ -107,7 +107,7 @@ private newComms($) {
 
                     }
         });
-    }, 60000)
+    }, 600000)
 
     };
 }; //End of class
