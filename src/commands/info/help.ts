@@ -21,13 +21,15 @@ export default class help {
         \`${config.General.prefix}listbans [Username | SteamID]\`
         \`${config.General.prefix}listcomms [Username | SteamID]\`
         \`${config.General.prefix}topten [EU | SG | US] [Server]\`
-        \`${config.General.prefix}h-search [Username | SteamID] ?[EU | SG | US] ?[Server]\`
+        \`${config.General.prefix}search [Username | SteamID] ?[EU | SG | US] ?[Server]\`
 
         **Fun:**
         \`${config.General.prefix}kiss [Tag]\`
         \`${config.General.prefix}hug [Tag]\`
         \`${config.General.prefix}8ball [qeustion]\`
         
+        **Steam:**
+        \`${config.General.prefix}steamid [SteamID, SteamID64, SteamID32, CustomURl, URL]\`
         ]
         This bot is configured on panda.tf and is purpose is to check stuff from panda.tf
 

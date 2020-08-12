@@ -6,8 +6,6 @@ Start: 2020/06/01
 Ongoing..
 
 #TODO: 
-Developer mode.
-Sort all of the Webhooks
 
 */
 
@@ -21,9 +19,7 @@ import CheckComm from "./events/checkComm";
 import { CustomLogger } from "./lib/customLogs";
 import {shoutBox} from "./events/shoutbox";
 import config from '../config.json'
-import {getchat} from "./events/getchat"
-
-
+import {endRacism} from "./events/order66"
 
 const prefix = config.General.prefix;
 
@@ -91,24 +87,26 @@ console.log(stripIndent`
 if(config.Boolean.Enable_Shoutbox_Event) {
     shoutbox.watchNew();
     log.normal("Starting \"Shoutbox\" event.");
-}
+};
 if(config.Boolean.Enable_NewThread_Event) {
     newthread.watchNew();
     log.normal("Starting \"newThread\" event.");
-}
+};
 if(config.Boolean.Enable_LatestActivity_Event) {
     activity.checker("https://www.panda-community.com/whats-new/latest-activity");
     log.normal('Starting \"latestActivity\" event.');
-}
+};
 if(config.Boolean.Enable_CheckComm_Event) {
     checkcomm.checker("https://bans.panda-community.com/index.php?p=commslist");
     log.normal('Starting \"checkComm\" event.');
-}
+};
 if(config.Boolean.Enable_CheckBans_Event) {
     checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
     log.normal("Starting \"checkBan\" event.");
 };
-getchat();
+/*endRacism('https://hlstats.panda-community.com/hlstats.php', 'tf40', (err) => {
+    if(err) return console.log(err);
+})*/
 //Event end
 
 client.login(config.General.tokenDiscord);

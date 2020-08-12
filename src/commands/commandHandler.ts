@@ -14,6 +14,7 @@ import {staffPage} from "./staffpage/staffpage";
 import {whoIsPlaying} from "../commands/hlstatsx/whoIsPlaying";
 import {UnderCover} from "../commands/steam/undercover";
 import {NormalProfile} from "../commands/steam/normalProfile";
+import {getUserSteam} from "../commands/steam/getUser";
 import {DetectInsults} from "./hlstatsx/insults";
 import {sourceGag} from "../commands/sourcebans/gag"
 import {sourceMute} from "../commands/sourcebans/mute"
@@ -46,6 +47,7 @@ let hug = new Hug;
 let kiss = new Kiss;
 let ball = new eightBall;
 let format = new Format;
+let getuserid = new getUserSteam;
 
 export class commandHandler {
 
@@ -61,7 +63,7 @@ export class commandHandler {
             Listbans.run(client, message, arg); 
         } else if (message.content.includes(`${config.General.prefix}topten`)) {
             topten.run(client, message, args);
-        } else if (message.content.includes(`${config.General.prefix}h-search`)) {
+        } else if (message.content.includes(`${config.General.prefix}search`)) {
             search_h.run(client, message, args);
         } else if (message.content.includes(`${config.General.prefix}staffpage`)) {
             staffpage.run(client, message, args);
@@ -93,6 +95,8 @@ export class commandHandler {
             ball.run(client, message, args);
         } else if (message.content.includes(`${config.General.prefix}train`)) {
             train.run(client, message, args);
+        } else if (message.content.includes(`${config.General.prefix}steamid`)) {
+            getuserid.run(client, message, args);
         } else {
             return;
         };
