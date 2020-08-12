@@ -112,6 +112,7 @@ private async underCover(client, message, args) {
                 await page.waitFor(2000);
                 if(page.url() !== "https://steamcommunity.com/id/Tolfx/edit/info")
                 {
+                    msg.edit('Login to steam..');
                     steam.login(page).then(async data => {
                         if(data)
                         {
@@ -190,7 +191,7 @@ private async goUndercover(page) {
 
     // Clicks on Save
     await page.click(`#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary`);
-
+    await page.waitFor(2000);
 }
 
 }; //End of class
