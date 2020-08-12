@@ -98,7 +98,6 @@ private newComms($) {
                         **SteamID:** \`${result[j].SteamID}\`
                         **Length:** \`${result[j].BanLength}\`
                         **Reason:** \`${result[j].Reason}\`
-                        **Blocked from:** \`${result[j].Server}\`
                         
                         **Admin:** \`${result[j].Admin}\``);
                 
