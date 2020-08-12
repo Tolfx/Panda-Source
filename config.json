@@ -10,7 +10,11 @@
         "ShoutboxURL": "",
         "LatestActivity": "",
         "NewComms": "",
-        "NewBans": ""
+        "NewBans": "",
+	"NewThread": "",
+
+        "Chatlog_04": "",
+        "EndRacism": ""
     },
 
     "Steam": {
@@ -20,7 +24,6 @@
     },
 
     "Boolean": {
-        "Enable_Shoutbox_Event": false,
         "Enable_NewThread_Event": false,
         "Enable_LatestActivity_Event": false,
         "Enable_CheckComm_Event": false,
