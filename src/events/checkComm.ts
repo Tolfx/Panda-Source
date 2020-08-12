@@ -33,12 +33,16 @@ private newComms($) {
         let length = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(7) > td:nth-child(2)`).text().trim();
         let reason = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(9) > td:nth-child(2)`).text().trim();
         let admin = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(10) > td:nth-child(2)`).text().trim();
-        let server = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`).text().trim();
+        let server = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`).attr('id');
         let totaBlocks = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(12) > td:nth-child(2)`).text().trim();
         let type = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td:nth-child(1)`).data();
 
         const content = fs.readFileSync(path);
         const Checker = JSON.parse(content);
+
+        if(server === undefined) {
+            server = "Web Ban";
+        }
 
         let objectJson =
         {
@@ -57,7 +61,6 @@ private newComms($) {
             ++count
             continue;
         } else {
-            
             return A_storingData;
         }
 
