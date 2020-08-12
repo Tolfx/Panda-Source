@@ -82,12 +82,12 @@ private newComms($) {
         
                         let result = this.newComms($);
                         const webhookClient = new WebhookClient(D_ID, D_Token);
-                        log.normal(`Found: ${result.length} new bans..`, true);
+                        log.normal(`Found: ${result.length} new comms..`, true);
         
                             for(var j = 0; j < result.length; ++j) {
                                 fs.writeFileSync(path, JSON.stringify(result[0]));
                                 const embed = new MessageEmbed()
-                                .setColor("#D75040")
+                                .setColor("#D7D040")
                                 .setDescription(stripIndents`
                                 **New Comm**
                                 
