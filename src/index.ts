@@ -84,10 +84,6 @@ console.log(stripIndent`
     ++      +----+  +-----+  +         X     X`);
 
 //Events starts here
-if(config.Boolean.Enable_Shoutbox_Event) {
-    shoutbox.watchNew();
-    log.normal("Starting \"Shoutbox\" event.");
-};
 if(config.Boolean.Enable_NewThread_Event) {
     newthread.watchNew();
     log.normal("Starting \"newThread\" event.");
