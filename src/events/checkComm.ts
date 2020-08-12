@@ -33,10 +33,9 @@ private newComms($) {
         let length = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(7) > td:nth-child(2)`).text().trim();
         let reason = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(9) > td:nth-child(2)`).text().trim();
         let admin = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(10) > td:nth-child(2)`).text().trim();
-        let server = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`).attr('id');
+        let server = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`).attr("id");
         let totaBlocks = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td > div > table > tbody > tr:nth-child(12) > td:nth-child(2)`).text().trim();
-        let type = $(`#banlist > table > tbody > tr:nth-child(${i+count}) > td:nth-child(1)`).data();
-
+        
         const content = fs.readFileSync(path);
         const Checker = JSON.parse(content);
 
@@ -63,11 +62,11 @@ private newComms($) {
         } else {
             return A_storingData;
         }
-
-
     }
 }
 
+//600000
+//#D7D040
 /**
  * 
  * @param url - The url for sourcebans comms
@@ -75,41 +74,38 @@ private newComms($) {
     public async checker(url: string)
     {
         setInterval(() => {
-        request(url,
-            (error, response, html) => {
-                if(!error && response.statusCode == 200) {
 
-                    const $ = cheerio.load(html);
-
-                    let result = this.newComms($);
-
-                    log.normal(`Found: ${result.length} new comms..`, true);
-
-                    const webhookClient = new WebhookClient(D_ID, D_Token);
-                    
-                    for(var j = 0; j < result.length; ++j) {
-                        fs.writeFileSync(path, JSON.stringify(result[0]));
-                        const embed = new MessageEmbed()
-                        .setColor("#D7D040")
-                        .setDescription(stripIndents`
-                        **New Comm block**
+            request(url,
+                (error, response, html) => {
+                    if(!error && response.statusCode == 200) {
+                        const $ = cheerio.load(html);
+        
+                        let result = this.newComms($);
+                        const webhookClient = new WebhookClient(D_ID, D_Token);
+                        log.normal(`Found: ${result.length} new bans..`, true);
+        
+                            for(var j = 0; j < result.length; ++j) {
+                                fs.writeFileSync(path, JSON.stringify(result[0]));
+                                const embed = new MessageEmbed()
+                                .setColor("#D75040")
+                                .setDescription(stripIndents`
+                                **New Comm**
+                                
+                                **Name of user:** \`${result[j].NameOfUser}\`
+                                **SteamID:** \`${result[j].SteamID}\`
+                                **Length:** \`${result[j].BanLength}\`
+                                **Reason:** \`${result[j].Reason}\`
+                                
+                                **Admin:** \`${result[j].Admin}\``);
                         
-                        **Name of user:** \`${result[j].NameOfUser}\`
-                        **SteamID:** \`${result[j].SteamID}\`
-                        **Length:** \`${result[j].BanLength}\`
-                        **Reason:** \`${result[j].Reason}\`
-                        
-                        **Admin:** \`${result[j].Admin}\``);
-                
-                    webhookClient.send('', {
-                        username: 'New Block',
-                        embeds: [embed],
-                    });
-                    }
-
-                    }
-        });
-    }, 600000)
+                            webhookClient.send('', {
+                                username: 'New Ban',
+                                embeds: [embed],
+                            });
+                            }
+                    };
+                });
+            }, 600000);
 
     };
 }; //End of class

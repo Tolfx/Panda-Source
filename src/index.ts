@@ -100,9 +100,6 @@ if(config.Boolean.Enable_CheckBans_Event) {
     checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
     log.normal("Starting \"checkBan\" event.");
 };
-/*endRacism('https://hlstats.panda-community.com/hlstats.php', 'tf40', (err) => {
-    if(err) return console.log(err);
-})*/
 //Event end
 
 client.login(config.General.tokenDiscord);
