@@ -1,30 +1,25 @@
-
-
 export class eightBall {
+  public run(client, message, args) {
+    this.eightball(client, message, args);
+  }
 
+  private eightball(client, message, args) {
+    if (!args[0]) return message.channel.send("You can ask air?");
 
-    public run(client, message, args) {
-        this.eightball(client, message, args);
-    }
+    //let question = args.slice(1).join(" ");
 
-    private eightball(client, message, args) {
-        if(!args[0]) return message.channel.send('You can ask air?');
+    let answers = [
+      "Yes",
+      "No",
+      "Maybe",
+      "Ask later",
+      "I'll think about it",
+      "You just ask later, I can't answer it right now",
+      "The universe says so",
+    ];
 
-        //let question = args.slice(1).join(" ");
+    let random = Math.floor(Math.random() * answers.length);
 
-        let answers = 
-        [
-            "Yes",
-            "No",
-            "Maybe",
-            "Ask later",
-            "I'll think about it",
-            "You just ask later, I can't answer it right now",
-            "The universe says so"
-        ]
-
-        let random = Math.floor(Math.random() * answers.length);
-
-        return message.channel.send(answers[random]);
-    };
-};
+    return message.channel.send(answers[random]);
+  }
+}
