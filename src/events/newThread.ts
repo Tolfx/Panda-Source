@@ -40,13 +40,13 @@ export class newThread
                 sectionURL: sectionURL
             };
 
-            console.log(objectJson)
+            log.normal(objectJson)
             if(objectJson.titleURL !== Checker.titleURL) {
                 A_newThreads[i] = objectJson;
                 A_newThreads.push(objectJson)
                 continue;
             } else {
-                console.log(A_newThreads)
+                log.normal(A_newThreads)
                 return A_newThreads;
             }
             
@@ -55,7 +55,6 @@ export class newThread
 
     public async watchNew() {
         let url = "https://www.panda-community.com/";
-        let dataCheck = "newThread.json";
 
         request(url,
             async (error, response, html) => {
@@ -76,8 +75,7 @@ export class newThread
                         Title: [${result[j].title}](${result[j].titleURL})
                         User: [${result[j].user}](${result[j].userURL})
 
-                        Section: [${result[j].section}](${result[j].sectionURL})
-                        `);
+                        Section: [${result[j].section}](${result[j].sectionURL})`);
                 
                     webhookClient.send('', {
                         username: 'New Thread',

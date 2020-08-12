@@ -27,31 +27,31 @@ export class CustomLogger
       public warn(body: any, discord?: boolean)
       {
         let d = new Date();
-          console.log(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn:`, colors.red(body));
+          console.log(`${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn:`, colors.red(body));
           fs.appendFile(
             "logs.txt", 
-            `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` + body + "\n", 
+            `${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` + body + "\n", 
             function(err) {
               if (err) throw err;
           });
           if (discord) return this.Webhook(
-            `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` + body, 
+            `${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` + body, 
             "#D75040");
       };
 
       public normal(body: any, discord?: boolean)
       {
         let d = new Date();
-        console.log(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose:`, colors.cyan(body));
+        console.log(`${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose:`, colors.cyan(body));
         fs.appendFile(
         "logs.txt", 
-        `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` + body + "\n", 
+        `${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` + body + "\n", 
         function(err) {
             if (err) throw err;
         });
 
         if (discord) return this.Webhook(
-          `${d.getFullYear()}-${d.getMonth()}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` + body, 
+          `${d.getFullYear()}-${(d.getMonth())+1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` + body, 
           "#40D79C");
       };
 
