@@ -22,26 +22,29 @@ let D_ID = getID(config.Discord.EndRacism);
 let D_Token = getToken(config.Discord.EndRacism);
 let path = "json/endRacism.json"
 
+interface options {
+    URL: string
+    ID: string
+    sec: number
+}
+
 /**
  * 
- * @param URL The url of hlstatx.
- * @param ID The id of the server.
+ * @param options URL, ID, sec
  * @param callback Result(s)
  */
-export function endRacism(
-    URL: string,
-    ID: string, 
+export function endRacism(options:options, 
     callback: (err: null | Error, result?: any) => void) {
-    
     //Errors for safety;
-    if(!URL) return callback(new Error('No URL was provided'));
-    if(!ID) return callback(new Error('No ID was provided'));
-    if(!URL.includes('hlstats.php')) return callback(new Error('Not a valid link.'));
-    if(!ID.includes('tf')) return callback(new Error('Invalid ID'));
+    if(!options.URL) return callback(new Error('No URL was provided'));
+    if(!options.ID) return callback(new Error('No ID was provided'));
+    if(!options.sec) return callback(new Error('No seconds was provided'));
+    if(!options.URL.includes('hlstats.php')) return callback(new Error('Not a valid link.'));
+    if(!options.ID.includes('tf')) return callback(new Error('Invalid ID'));
 
     setInterval(() => {
         
-        request(URL+"?mode=chat&game="+ID,
+        request(options.URL+"?mode=chat&game="+options.ID,
             async (error, response, html) => {
                 if(!error && response.statusCode == 200) {
     
@@ -112,9 +115,11 @@ export function endRacism(
                             };
                         };//end of for loop
                     });
-                };
+                } else {
+                    callback(new Error(`Couldn't respond to server. StatusCode: ` + response.statusCode))
+                }
             });  
-    }, 60000)
+    }, options.sec)
 };
 
 function newChat($) {
