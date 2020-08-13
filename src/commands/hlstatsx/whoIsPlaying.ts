@@ -2,7 +2,8 @@ import Servers from '../../json/EU_Server.json';
 import config from '../../../config.json';
 import { MessageEmbed, Message } from 'discord.js';
 import { stripIndents } from 'common-tags';
-const puppeteer = require('puppeteer');
+import request from 'request';
+import cheerio from 'cheerio';
 
 export class whoIsPlaying {
   public run(client, message, args) {
@@ -10,18 +11,27 @@ export class whoIsPlaying {
   }
 
   private async whoIsPlaying(message, args) {
+    return message.channel.send('Yeah noo..');
     if (!args[0]) return;
     if (!args[1]) return;
 
+    let data = [];
+
     let url = 'https://hlstats.panda-community.com/hlstats.php?game=';
+    let ID = this.whichServer(args[0].toUpperCase(), args[1].toUpperCase());
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    request(url + ID, (error, response, html) => {
+      if (!error && response.statusCode == 200) {
+        let $ = cheerio.load(html);
 
-    this.whichServer(args[0].toUpperCase(), args[1].toUpperCase()).then(async (ID) => {
-      await page.goto(url + ID);
-      let data = await this.checkPlayers(page);
-      console.log(data);
+        for (var i = 2; i < 20; ++i) {
+          let player = $(
+            `body > div.content > div.block > div > table.livestats-table > tbody > tr:nth-child(${i}) > td:nth-child(2) > a > text()`
+          );
+
+          console.log(player);
+        }
+      }
     });
   }
 
