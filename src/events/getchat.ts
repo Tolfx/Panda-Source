@@ -1,12 +1,12 @@
-import { WebhookClient, MessageEmbed } from "discord.js";
-import fs from "fs";
-const { stripIndents } = require("common-tags");
-import { CustomLogger } from "../lib/customLogs";
-import cheerio from "cheerio";
-import request from "request";
-import paths from "../types/paths";
-import { getToken, getID } from "../lib/webhook";
-import config from "../../config.json";
+import { WebhookClient, MessageEmbed } from 'discord.js';
+import fs from 'fs';
+const { stripIndents } = require('common-tags');
+import { CustomLogger } from '../lib/customLogs';
+import cheerio from 'cheerio';
+import request from 'request';
+import paths from '../types/paths';
+import { getToken, getID } from '../lib/webhook';
+import config from '../../config.json';
 
 let D_ID = getID(config.Discord.Chatlog_04);
 let D_Token = getToken(config.Discord.Chatlog_04);
@@ -27,10 +27,10 @@ function newChat($) {
     )
       .text()
       .trim()
-      .split("/>");
+      .split('/>');
     let playerURL = $(
       `body > div.content > div.block > div:nth-child(6) > table > tbody > tr:nth-child(${i}) > td:nth-child(2) > a`
-    ).attr("href");
+    ).attr('href');
     let chat = $(
       `body > div.content > div.block > div:nth-child(6) > table > tbody > tr:nth-child(${i}) > td:nth-child(3)`
     )
@@ -57,8 +57,7 @@ function newChat($) {
 }
 
 export function getchat() {
-  let url =
-    "https://hlstats.panda-community.com/hlstats.php?mode=chat&game=tf52";
+  let url = 'https://hlstats.panda-community.com/hlstats.php?mode=chat&game=tf52';
 
   setInterval(() => {
     request(url, async (error, response, html) => {
@@ -72,12 +71,11 @@ export function getchat() {
 
         for (var j = result.length - 1; j >= 0; j--) {
           fs.writeFileSync(path, JSON.stringify(result[0]));
-          const embed = new MessageEmbed().setColor("#D75040")
-            .setDescription(stripIndents`
+          const embed = new MessageEmbed().setColor('#D75040').setDescription(stripIndents`
                   **${result[j].Time}** | [${result[j].User}](https://hlstats.panda-community.com/${result[j].UserURL}) : \`${result[j].Chat}\``);
 
-          webhookClient.send("", {
-            username: "Logs",
+          webhookClient.send('', {
+            username: 'Logs',
             embeds: [embed],
           });
         }

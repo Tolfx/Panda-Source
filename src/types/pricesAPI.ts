@@ -5,7 +5,7 @@ export interface ApiRequest {
   buy?: Currencies;
   sell?: Currencies;
   time?: number;
-  source?: "bptf" | "scm";
+  source?: 'bptf' | 'scm';
   currency?: null | string;
 }
 

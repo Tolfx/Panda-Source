@@ -1,8 +1,8 @@
-var colors = require("colors");
-import { WebhookClient, MessageEmbed } from "discord.js";
-import fs from "fs";
-import config from "../../config.json";
-import { getToken, getID } from "../lib/webhook";
+var colors = require('colors');
+import { WebhookClient, MessageEmbed } from 'discord.js';
+import fs from 'fs';
+import config from '../../config.json';
+import { getToken, getID } from '../lib/webhook';
 
 export class CustomLogger {
   private Webhook(info, color: string) {
@@ -13,8 +13,8 @@ export class CustomLogger {
 
     const embed = new MessageEmbed().setColor(color).setDescription(info);
 
-    webhookClient.send("", {
-      username: "Logs",
+    webhookClient.send('', {
+      username: 'Logs',
       embeds: [embed],
     });
   }
@@ -28,12 +28,12 @@ export class CustomLogger {
       colors.red(body)
     );
     fs.appendFile(
-      "logs.txt",
+      'logs.txt',
       `${d.getFullYear()}-${
         d.getMonth() + 1
       }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` +
         body +
-        "\n",
+        '\n',
       function (err) {
         if (err) throw err;
       }
@@ -42,9 +42,8 @@ export class CustomLogger {
       return this.Webhook(
         `${d.getFullYear()}-${
           d.getMonth() + 1
-        }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` +
-          body,
-        "#D75040"
+        }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | warn: ` + body,
+        '#D75040'
       );
   }
 
@@ -57,12 +56,12 @@ export class CustomLogger {
       colors.cyan(body)
     );
     fs.appendFile(
-      "logs.txt",
+      'logs.txt',
       `${d.getFullYear()}-${
         d.getMonth() + 1
       }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` +
         body +
-        "\n",
+        '\n',
       function (err) {
         if (err) throw err;
       }
@@ -72,9 +71,8 @@ export class CustomLogger {
       return this.Webhook(
         `${d.getFullYear()}-${
           d.getMonth() + 1
-        }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` +
-          body,
-        "#40D79C"
+        }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | verbose: ` + body,
+        '#40D79C'
       );
   }
 } //End of class

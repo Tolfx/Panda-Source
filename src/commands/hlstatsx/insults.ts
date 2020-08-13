@@ -1,8 +1,8 @@
-import { MessageEmbed } from "discord.js";
-import { stripIndents } from "common-tags";
-import * as checker from "@tensorflow-models/toxicity";
-const tfGPU = require("@tensorflow/tfjs-node-gpu");
-const puppeteer = require("puppeteer");
+import { MessageEmbed } from 'discord.js';
+import { stripIndents } from 'common-tags';
+import * as checker from '@tensorflow-models/toxicity';
+const tfGPU = require('@tensorflow/tfjs-node-gpu');
+const puppeteer = require('puppeteer');
 
 let final = [];
 export class DetectInsults {
@@ -11,7 +11,7 @@ export class DetectInsults {
   }
 
   private async detect(client, message, args) {
-    if (!args[0]) return message.channel.send("link plz ty");
+    if (!args[0]) return message.channel.send('link plz ty');
     const url = args[0];
 
     const browser = await puppeteer.launch();
@@ -23,7 +23,7 @@ export class DetectInsults {
 
     await this.getChat(page).then(async (chat) => {
       await checker
-        .load(threshold, ["toxicity", "insult", "severe_toxicity"])
+        .load(threshold, ['toxicity', 'insult', 'severe_toxicity'])
         .then(async (model) => {
           for (var i = 0; i < chat.length; i++) {
             let chatLog = chat[i];
@@ -64,7 +64,7 @@ export class DetectInsults {
                 Chat: ${result.chat}
                 Toxic: ${result.toxicity}%`
                 )
-                .reduce((string, category) => string + "\n" + category);
+                .reduce((string, category) => string + '\n' + category);
               const embed = new MessageEmbed().setDescription(mapping);
 
               message.channel.send(embed);
@@ -75,22 +75,19 @@ export class DetectInsults {
   }
 
   private async sendMessage(result, message): Promise<any> {
-    const embed = new MessageEmbed().addField("Result", result.toString());
+    const embed = new MessageEmbed().addField('Result', result.toString());
 
     message.channel.send(embed);
   }
 
   private async getChat(page) {
     let first_column_text = await page.evaluate(() =>
-      Array.from(
-        document.querySelectorAll(".bg2"),
-        (element) => element.textContent
-      )
+      Array.from(document.querySelectorAll('.bg2'), (element) => element.textContent)
     );
     let unique = {};
     first_column_text.forEach(function (i) {
       if (!unique[i]) {
-        unique[i] = "";
+        unique[i] = '';
       }
     });
     //console.log(Object.keys(unique));

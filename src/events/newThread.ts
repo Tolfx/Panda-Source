@@ -1,12 +1,12 @@
-import { WebhookClient, MessageEmbed } from "discord.js";
-import config from "../../config.json";
-import fs from "fs";
-import { CustomLogger } from "../lib/customLogs";
-import cheerio from "cheerio";
-import request from "request";
-import paths from "../types/paths";
-import { getToken, getID } from "../lib/webhook";
-const { stripIndents } = require("common-tags");
+import { WebhookClient, MessageEmbed } from 'discord.js';
+import config from '../../config.json';
+import fs from 'fs';
+import { CustomLogger } from '../lib/customLogs';
+import cheerio from 'cheerio';
+import request from 'request';
+import paths from '../types/paths';
+import { getToken, getID } from '../lib/webhook';
+const { stripIndents } = require('common-tags');
 
 const log = new CustomLogger();
 
@@ -25,7 +25,7 @@ export class newThread {
         .trim();
       let titleURL = $(
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-main.contentRow-main--close > a`
-      ).attr("href");
+      ).attr('href');
       let user = $(
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-main.contentRow-main--close > div:nth-child(3) > ul > li:nth-child(1)`
       )
@@ -33,7 +33,7 @@ export class newThread {
         .trim();
       let userURL = $(
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-figure`
-      ).attr("href");
+      ).attr('href');
       let section = $(
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-main.contentRow-main--close > div:nth-child(4) > a`
       )
@@ -41,7 +41,7 @@ export class newThread {
         .trim();
       let sectionURL = $(
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-main.contentRow-main--close > div:nth-child(4) > a`
-      ).attr("href");
+      ).attr('href');
 
       const content = fs.readFileSync(path);
       const Checker = JSON.parse(content);
@@ -68,7 +68,7 @@ export class newThread {
   }
 
   public async watchNew() {
-    let url = "https://www.panda-community.com/";
+    let url = 'https://www.panda-community.com/';
 
     request(url, async (error, response, html) => {
       if (!error && response.statusCode == 200) {
@@ -82,15 +82,14 @@ export class newThread {
 
         for (var j = 0; j < result.length; ++j) {
           fs.writeFileSync(path, JSON.stringify(result[0]));
-          const embed = new MessageEmbed().setColor("#D7D040")
-            .setDescription(stripIndents`
+          const embed = new MessageEmbed().setColor('#D7D040').setDescription(stripIndents`
                         Title: [${result[j].title}](${result[j].titleURL})
                         User: [${result[j].user}](${result[j].userURL})
 
                         Section: [${result[j].section}](${result[j].sectionURL})`);
 
-          webhookClient.send("", {
-            username: "New Thread",
+          webhookClient.send('', {
+            username: 'New Thread',
             embeds: [embed],
           });
         }

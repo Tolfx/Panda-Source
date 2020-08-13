@@ -1,6 +1,6 @@
-import { MessageEmbed } from "discord.js";
-import { stripIndents } from "common-tags";
-import config from "../../../config.json";
+import { MessageEmbed } from 'discord.js';
+import { stripIndents } from 'common-tags';
+import config from '../../../config.json';
 
 export default class help {
   public static run(client, message, args) {
@@ -8,8 +8,8 @@ export default class help {
       .setAuthor(
         client.user.username,
         client.user.displayAvatarURL({
-          format: "png",
-          dynamic: "true",
+          format: 'png',
+          dynamic: 'true',
           size: 128,
         })
       )
@@ -43,7 +43,7 @@ export default class help {
 
         *More features will be added in the future. (if i want to lol)*`
       )
-      .setColor("#8F6787")
+      .setColor('#8F6787')
       .setFooter(message.id);
 
     message.channel.send(embed);

@@ -1,5 +1,5 @@
-import { good, bad, guess } from "../../brains/toxic";
-const puppeteer = require("puppeteer");
+import { good, bad, guess } from '../../brains/toxic';
+const puppeteer = require('puppeteer');
 
 export class TrainBrain {
   public run(client, message, args) {
@@ -8,22 +8,19 @@ export class TrainBrain {
 
   private async getChat(page) {
     let first_column_text = await page.evaluate(() =>
-      Array.from(
-        document.querySelectorAll(".bg2"),
-        (element) => element.textContent
-      )
+      Array.from(document.querySelectorAll('.bg2'), (element) => element.textContent)
     );
     let unique = {};
     first_column_text.forEach(function (i) {
       if (!unique[i]) {
-        unique[i] = "";
+        unique[i] = '';
       }
     });
     return Object.keys(unique);
   }
 
   private async train(client, message, args) {
-    if (!args[0]) return message.channel.send("You need to provide a link");
+    if (!args[0]) return message.channel.send('You need to provide a link');
 
     const url = args[0];
 
@@ -39,13 +36,13 @@ export class TrainBrain {
         message.channel
           .send(`Is this toxic? \`${chat[i]}\` \n\nGuess: ${guess(chat[i])}`)
           .then((msg) => {
-            msg.react("✅").then(async (r) => {
-              msg.react("❌");
+            msg.react('✅').then(async (r) => {
+              msg.react('❌');
 
               const backWardsFilter = (reaction, user) =>
-                reaction.emoji.name === "✅" && user.id === message.author.id;
+                reaction.emoji.name === '✅' && user.id === message.author.id;
               const forwardsFilter = (reaction, user) =>
-                reaction.emoji.name === "❌" && user.id === message.author.id;
+                reaction.emoji.name === '❌' && user.id === message.author.id;
 
               const backwards = msg.createReactionCollector(backWardsFilter, {
                 time: 60000,
@@ -54,12 +51,12 @@ export class TrainBrain {
                 time: 60000,
               });
 
-              backwards.on("collect", async (r, u) => {
+              backwards.on('collect', async (r, u) => {
                 bad(chatlog);
                 msg.delete();
               });
 
-              forwards.on("collect", async (r, u) => {
+              forwards.on('collect', async (r, u) => {
                 good(chatlog);
                 msg.delete();
               });

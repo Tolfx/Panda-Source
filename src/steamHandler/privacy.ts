@@ -1,10 +1,10 @@
-import https from "https";
-import fs from "fs";
-import request from "request";
+import https from 'https';
+import fs from 'fs';
+import request from 'request';
 
 export class steamPrivacy {
   public setPrivacy() {
-    let path = "cookies_SteamEdit.json";
+    let path = 'cookies_SteamEdit.json';
     const content = fs.readFileSync(path);
     const cookiesArr = JSON.parse(content);
 
@@ -20,8 +20,8 @@ export class steamPrivacy {
     });
 
     const options = {
-      uri: "https://steamcommunity.com/id/my/ajaxsetprivacy",
-      method: "POST",
+      uri: 'https://steamcommunity.com/id/my/ajaxsetprivacy',
+      method: 'POST',
       json: true,
       formData: {
         sessionid: sessionID,
@@ -33,7 +33,7 @@ export class steamPrivacy {
     request(options, function (err, res, body) {
       if (err) throw err;
 
-      if (!body) return console.log("fail");
+      if (!body) return console.log('fail');
 
       return console.log(JSON.stringify(body));
     });

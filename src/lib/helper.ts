@@ -1,4 +1,4 @@
-import { UnknownDictionaryKnownValues } from "../types/common";
+import { UnknownDictionaryKnownValues } from '../types/common';
 
 export function exponentialBackoff(n: number, base = 1000): number {
   return Math.pow(2, n) * base + Math.floor(Math.random() * base);

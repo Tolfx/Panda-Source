@@ -1,8 +1,8 @@
-import Servers from "../../json/EU_Server.json";
-import config from "../../../config.json";
-import { MessageEmbed, Message } from "discord.js";
-import { stripIndents } from "common-tags";
-const puppeteer = require("puppeteer");
+import Servers from '../../json/EU_Server.json';
+import config from '../../../config.json';
+import { MessageEmbed, Message } from 'discord.js';
+import { stripIndents } from 'common-tags';
+const puppeteer = require('puppeteer');
 
 export class whoIsPlaying {
   public run(client, message, args) {
@@ -13,37 +13,32 @@ export class whoIsPlaying {
     if (!args[0]) return;
     if (!args[1]) return;
 
-    let url = "https://hlstats.panda-community.com/hlstats.php?game=";
+    let url = 'https://hlstats.panda-community.com/hlstats.php?game=';
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    this.whichServer(args[0].toUpperCase(), args[1].toUpperCase()).then(
-      async (ID) => {
-        await page.goto(url + ID);
-        let data = await this.checkPlayers(page);
-        console.log(data);
-      }
-    );
+    this.whichServer(args[0].toUpperCase(), args[1].toUpperCase()).then(async (ID) => {
+      await page.goto(url + ID);
+      let data = await this.checkPlayers(page);
+      console.log(data);
+    });
   }
 
   private async checkPlayers(page): Promise<Array<string>> {
     let first_column_text = await page.evaluate(() =>
-      Array.from(
-        document.querySelectorAll(".fSmall"),
-        (element) => element.textContent
-      )
+      Array.from(document.querySelectorAll('.fSmall'), (element) => element.textContent)
     );
     let unique = {};
     first_column_text.forEach(function (i) {
       if (!unique[i]) {
-        unique[i] = "";
+        unique[i] = '';
       }
       if (unique[i] === Number) {
-        unique[i] = "";
+        unique[i] = '';
       }
       if (unique[i] === Float32Array) {
-        unique[i] = "";
+        unique[i] = '';
       }
     });
 
@@ -59,7 +54,7 @@ export class whoIsPlaying {
     const SGServer = Servers.SGServer;
     const USServer = Servers.USServer;
 
-    if (argsOne.includes("EU")) {
+    if (argsOne.includes('EU')) {
       for (var xServer = 0; xServer < argsForServers; ++xServer) {
         if (argsTwo.includes(EUServer.Dodgeball_1[xServer])) {
           return new Promise((resolve) => {
@@ -183,7 +178,7 @@ export class whoIsPlaying {
           });
         }
       }
-    } else if (argsOne.includes("SG")) {
+    } else if (argsOne.includes('SG')) {
       if (argsTwo.includes(SGServer.TwoFort)) {
         return new Promise((resolve) => {
           resolve(`tf22`);
@@ -205,7 +200,7 @@ export class whoIsPlaying {
           resolve(`tf60`);
         });
       }
-    } else if (argsOne.includes("US")) {
+    } else if (argsOne.includes('US')) {
       if (argsTwo.includes(USServer.Deathrun)) {
         return new Promise((resolve) => {
           resolve(`tf28`);

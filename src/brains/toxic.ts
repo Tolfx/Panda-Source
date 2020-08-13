@@ -1,6 +1,6 @@
-import brain from "brain.js";
-import fs from "fs";
-import paths from "../types/paths";
+import brain from 'brain.js';
+import fs from 'fs';
+import paths from '../types/paths';
 
 let net = new brain.recurrent.RNN({
   hiddenLayers: [2, 2, 2],
@@ -14,7 +14,7 @@ export function bad(message) {
   const Checker = JSON.parse(content);
   Checker.push({
     input: message,
-    output: "Toxic",
+    output: 'Toxic',
   });
   fs.writeFileSync(path, JSON.stringify(Checker));
 }
@@ -24,7 +24,7 @@ export function good(message) {
   const Checker = JSON.parse(content);
   Checker.push({
     input: message,
-    output: "Not Toxic",
+    output: 'Not Toxic',
   });
   fs.writeFileSync(path, JSON.stringify(Checker));
 }
@@ -46,8 +46,8 @@ export function guess(message) {
   };
 
   net.train(Checker, configlol);
-  console.log(JSON.stringify(net.run("kys")));
-  console.log(net.run("kys"));
+  console.log(JSON.stringify(net.run('kys')));
+  console.log(net.run('kys'));
   return JSON.stringify(net.run(message));
 }
 //net.train(data)

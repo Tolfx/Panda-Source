@@ -1,5 +1,5 @@
-import superagent from "superagent";
-import { MessageEmbed } from "discord.js";
+import superagent from 'superagent';
+import { MessageEmbed } from 'discord.js';
 
 export class Hug {
   public run(client, message, args) {
@@ -11,19 +11,16 @@ export class Hug {
 
     let { body } = await superagent.get(`https://nekos.life/api/v2/img/hug`);
 
-    if (!args[0]) return message.channel.send("Tag someone");
+    if (!args[0]) return message.channel.send('Tag someone');
 
-    if (!user1) return message.channel.send("Tag someone");
+    if (!user1) return message.channel.send('Tag someone');
 
-    if (user1.id === message.author.id)
-      return message.channel.send("You can't hug yourself");
+    if (user1.id === message.author.id) return message.channel.send("You can't hug yourself");
 
     const embed = new MessageEmbed()
       .setColor(0xff7373)
       .setImage(body.url)
-      .setTitle(
-        `**${message.author.username}** hugged **${user1.user.username}**!`
-      )
+      .setTitle(`**${message.author.username}** hugged **${user1.user.username}**!`)
       .setTimestamp();
 
     message.channel.send(embed);

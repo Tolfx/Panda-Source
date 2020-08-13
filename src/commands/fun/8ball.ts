@@ -4,18 +4,18 @@ export class eightBall {
   }
 
   private eightball(client, message, args) {
-    if (!args[0]) return message.channel.send("You can ask air?");
+    if (!args[0]) return message.channel.send('You can ask air?');
 
     //let question = args.slice(1).join(" ");
 
     let answers = [
-      "Yes",
-      "No",
-      "Maybe",
-      "Ask later",
+      'Yes',
+      'No',
+      'Maybe',
+      'Ask later',
       "I'll think about it",
       "You just ask later, I can't answer it right now",
-      "The universe says so",
+      'The universe says so',
     ];
 
     let random = Math.floor(Math.random() * answers.length);

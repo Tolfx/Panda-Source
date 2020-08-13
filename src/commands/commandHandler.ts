@@ -4,28 +4,28 @@ This file takes all of the commands into one place and executes it if the messag
 Nothing really special tbh..
 
 */
-import config from "../../config.json";
-import help from "../commands/info/help";
-import listcomms from "../commands/sourcebans/listcomms";
-import listbans from "../commands/sourcebans/listbans";
-import { topTen } from "../commands/hlstatsx/top10";
-import { SearchHlstatsx } from "../commands/hlstatsx/hlstats-Search";
-import { staffPage } from "./staffpage/staffpage";
-import { whoIsPlaying } from "../commands/hlstatsx/whoIsPlaying";
-import { UnderCover } from "../commands/steam/undercover";
-import { NormalProfile } from "../commands/steam/normalProfile";
-import { getUserSteam } from "../commands/steam/getUser";
-import { DetectInsults } from "./hlstatsx/insults";
-import { sourceGag } from "../commands/sourcebans/gag";
-import { sourceMute } from "../commands/sourcebans/mute";
-import { sourceSilence } from "../commands/sourcebans/silence";
-import { sourceBan } from "../commands/sourcebans/ban";
-import { Purge } from "../commands/moderation/purge";
-import { Hug } from "../commands/fun/hug";
-import { Kiss } from "../commands/fun/kiss";
-import { eightBall } from "../commands/fun/8ball";
-import { Format } from "../commands/info/format";
-import { TrainBrain } from "../commands/brain/train";
+import config from '../../config.json';
+import help from '../commands/info/help';
+import listcomms from '../commands/sourcebans/listcomms';
+import listbans from '../commands/sourcebans/listbans';
+import { topTen } from '../commands/hlstatsx/top10';
+import { SearchHlstatsx } from '../commands/hlstatsx/hlstats-Search';
+import { staffPage } from './staffpage/staffpage';
+import { whoIsPlaying } from '../commands/hlstatsx/whoIsPlaying';
+import { UnderCover } from '../commands/steam/undercover';
+import { NormalProfile } from '../commands/steam/normalProfile';
+import { getUserSteam } from '../commands/steam/getUser';
+import { DetectInsults } from './hlstatsx/insults';
+import { sourceGag } from '../commands/sourcebans/gag';
+import { sourceMute } from '../commands/sourcebans/mute';
+import { sourceSilence } from '../commands/sourcebans/silence';
+import { sourceBan } from '../commands/sourcebans/ban';
+import { Purge } from '../commands/moderation/purge';
+import { Hug } from '../commands/fun/hug';
+import { Kiss } from '../commands/fun/kiss';
+import { eightBall } from '../commands/fun/8ball';
+import { Format } from '../commands/info/format';
+import { TrainBrain } from '../commands/brain/train';
 
 //Modules / classes
 let train = new TrainBrain();
@@ -65,9 +65,7 @@ export class commandHandler {
       search_h.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}staffpage`)) {
       staffpage.run(client, message, args);
-    } else if (
-      message.content.includes(`${config.General.prefix}whoisplaying`)
-    ) {
+    } else if (message.content.includes(`${config.General.prefix}whoisplaying`)) {
       whoisplaying.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}undercover`)) {
       undercover.run(client, message, args);

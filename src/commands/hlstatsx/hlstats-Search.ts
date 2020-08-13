@@ -1,6 +1,6 @@
-import Servers from "../../json/EU_Server.json";
-import config from "../../../config.json";
-import { MessageEmbed, Message } from "discord.js";
+import Servers from '../../json/EU_Server.json';
+import config from '../../../config.json';
+import { MessageEmbed } from 'discord.js';
 
 export class SearchHlstatsx {
   public run(client, message, args) {
@@ -14,28 +14,17 @@ export class SearchHlstatsx {
       );
 
     try {
-      const embed = new MessageEmbed()
-        .setFooter(`Searched for: ${args[0]}`)
-        .setColor("D7B940");
+      const embed = new MessageEmbed().setFooter(`Searched for: ${args[0]}`).setColor('D7B940');
       //.setImage("https://www.panda-community.com/styles/io_dark/io/images/logo-white.png")
       let link = await this.linksHlstats(args[0]);
 
       if (!args[1]) {
-        await message.channel.send(
-          embed.setDescription(`[HlstatsX Link](${link})`)
-        );
+        await message.channel.send(embed.setDescription(`[HlstatsX Link](${link})`));
       } else if (!args[2]) {
-        await message.channel.send(
-          embed.setDescription(`[HlstatsX Link](${link})`)
-        );
+        await message.channel.send(embed.setDescription(`[HlstatsX Link](${link})`));
       } else {
-        await this.whichServer(
-          args[1].toUpperCase(),
-          args[2].toUpperCase()
-        ).then(async (ID) => {
-          await message.channel.send(
-            embed.setDescription(`[HlstatsX Link](${link + ID})`)
-          );
+        await this.whichServer(args[1].toUpperCase(), args[2].toUpperCase()).then(async (ID) => {
+          await message.channel.send(embed.setDescription(`[HlstatsX Link](${link + ID})`));
         });
       }
     } catch (err) {
@@ -45,7 +34,7 @@ export class SearchHlstatsx {
 
   private linksHlstats(args: any): Promise<string> {
     if (args.includes(`STEAM_`)) {
-      let steamID = args.replace("👍", ":1:");
+      let steamID = args.replace('👍', ':1:');
       return new Promise((resolve) => {
         resolve(
           `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${steamID}&st=uniqueid&game=`
@@ -67,7 +56,7 @@ export class SearchHlstatsx {
     const SGServer = Servers.SGServer;
     const USServer = Servers.USServer;
 
-    if (argsOne.includes("EU")) {
+    if (argsOne.includes('EU')) {
       for (var xServer = 0; xServer < argsForServers; ++xServer) {
         if (argsTwo.includes(EUServer.Dodgeball_1[xServer])) {
           return new Promise((resolve) => {
@@ -191,7 +180,7 @@ export class SearchHlstatsx {
           });
         }
       }
-    } else if (argsOne.includes("SG")) {
+    } else if (argsOne.includes('SG')) {
       if (argsTwo.includes(SGServer.TwoFort)) {
         return new Promise((resolve) => {
           resolve(`tf22`);
@@ -213,7 +202,7 @@ export class SearchHlstatsx {
           resolve(`tf60`);
         });
       }
-    } else if (argsOne.includes("US")) {
+    } else if (argsOne.includes('US')) {
       if (argsTwo.includes(USServer.Deathrun)) {
         return new Promise((resolve) => {
           resolve(`tf28`);

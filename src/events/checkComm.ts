@@ -3,15 +3,15 @@
 this codes works now
 
 */
-import { WebhookClient, MessageEmbed } from "discord.js";
-import fs from "fs";
-const { stripIndents } = require("common-tags");
-import { CustomLogger } from "../lib/customLogs";
-import cheerio from "cheerio";
-import request from "request";
-import paths from "../types/paths";
-import { getToken, getID } from "../lib/webhook";
-import config from "../../config.json";
+import { WebhookClient, MessageEmbed } from 'discord.js';
+import fs from 'fs';
+const { stripIndents } = require('common-tags');
+import { CustomLogger } from '../lib/customLogs';
+import cheerio from 'cheerio';
+import request from 'request';
+import paths from '../types/paths';
+import { getToken, getID } from '../lib/webhook';
+import config from '../../config.json';
 
 let D_ID = getID(config.Discord.NewComms);
 let D_Token = getToken(config.Discord.NewComms);
@@ -70,7 +70,7 @@ export default class CheckComm {
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`
-      ).attr("id");
+      ).attr('id');
       let totaBlocks = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
@@ -83,7 +83,7 @@ export default class CheckComm {
       const Checker = JSON.parse(content);
 
       if (server === undefined) {
-        server = "Web Ban";
+        server = 'Web Ban';
       }
 
       let objectJson = {
@@ -125,8 +125,7 @@ export default class CheckComm {
 
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
-            const embed = new MessageEmbed().setColor("#D7D040")
-              .setDescription(stripIndents`
+            const embed = new MessageEmbed().setColor('#D7D040').setDescription(stripIndents`
                                 **New Comm**
                                 
                                 **Name of user:** \`${result[j].NameOfUser}\`
@@ -136,8 +135,8 @@ export default class CheckComm {
                                 
                                 **Admin:** \`${result[j].Admin}\``);
 
-            webhookClient.send("", {
-              username: "New Ban",
+            webhookClient.send('', {
+              username: 'New Ban',
               embeds: [embed],
             });
           }
