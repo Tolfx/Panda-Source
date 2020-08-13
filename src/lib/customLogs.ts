@@ -75,4 +75,33 @@ export class CustomLogger {
         '#40D79C'
       );
   }
+
+  public debug(body: any, discord?: boolean) {
+    let d = new Date();
+    console.log(
+      `${d.getFullYear()}-${
+        d.getMonth() + 1
+      }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | debug:`,
+      colors.magenta(body)
+    );
+    fs.appendFile(
+      'logs.txt',
+      `${d.getFullYear()}-${
+        d.getMonth() + 1
+      }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | debug: ` +
+        body +
+        '\n',
+      function (err) {
+        if (err) throw err;
+      }
+    );
+
+    if (discord)
+      return this.Webhook(
+        `${d.getFullYear()}-${
+          d.getMonth() + 1
+        }-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()} | debug: ` + body,
+        '#8B008B'
+      );
+  }
 } //End of class
