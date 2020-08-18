@@ -13,8 +13,8 @@ export class getUserSteam {
     if (!args[0]) return;
 
     let embed = new MessageEmbed().setColor(0x9c98d9);
-
-    if (args[0].includes('STEAM_') || args[0].includes('[U:') || args[0].length === 17) {
+    let reg = new RegExp('^[0-9]+$');
+    if (args[0].includes('STEAM_') || args[0].includes('[U:') || args[0].length === reg) {
       let steamID64 = this.getID64(args[0]);
       this.getInfo64(steamID64, (err, result) => {
         if (err) return message.channel.send(`${err}`);
@@ -87,7 +87,7 @@ export class getUserSteam {
       (error, response, body) => {
         if (!error && response.statusCode == 200) {
           parseString(body, (err, result) => {
-            if (!result.response.error[0] === undefined) {
+            if (result.response === undefined) {
               let steamID64 = result.profile.steamID64[0];
               let avatar = result.profile.avatarMedium[0];
               let privacy = result.profile.privacyState[0];
@@ -121,7 +121,7 @@ export class getUserSteam {
       (error, response, body) => {
         if (!error && response.statusCode == 200) {
           parseString(body, (err, result) => {
-            if (!result.response.error[0] === undefined) {
+            if (!result.response === undefined) {
               let steamID64 = result.profile.steamID64[0];
               let avatar = result.profile.avatarMedium[0];
               let privacy = result.profile.privacyState[0];
@@ -155,7 +155,7 @@ export class getUserSteam {
       (error, response, body) => {
         if (!error && response.statusCode == 200) {
           parseString(body, (err, result) => {
-            if (!result.response.error[0] === undefined) {
+            if (!result.response === undefined) {
               let steamID64 = result.profile.steamID64[0];
               let avatar = result.profile.avatarMedium[0];
               let privacy = result.profile.privacyState[0];
