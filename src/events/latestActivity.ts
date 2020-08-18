@@ -38,6 +38,12 @@ export class latestActivity {
             '#top > div.p-body > div > div > div > div > div > div.block > div > ul > li:nth-child(1) > div > div > div.contentRow-title > a:nth-child(2)'
           ).attr('href');
 
+          let messageidk = $(
+            '#top > div.p-body > div > div > div > div > div > div.block > div > ul > li:nth-child(1) > div > div > div.contentRow-snippet'
+          )
+            .text()
+            .trim();
+
           const content = fs.readFileSync(path);
           const Checker = JSON.parse(content);
 
@@ -45,6 +51,7 @@ export class latestActivity {
             Activty: name,
             User: user,
             Link: link,
+            msg: messageidk,
           };
 
           if (objectJson.Activty !== Checker.Activty) {
@@ -53,11 +60,13 @@ export class latestActivity {
             const webhookClient = new WebhookClient(D_ID, D_Token);
 
             const embed = new MessageEmbed().setColor('#40D79C').setDescription(stripIndents`
-                        **New activity.**
-                        \`Activity:\` **${name}**
+                  **New activity.**
+                  \`Activity:\` **${name}**
 
-                        \`Link:\` https://www.panda-community.com/${link}
-                        \`Member link:\` https://www.panda-community.com/${user}`);
+                  \`msg:\` ${messageidk}
+
+                  \`Link:\` https://www.panda-community.com/${link}
+                  \`Member link:\` https://www.panda-community.com/${user}`);
 
             webhookClient.send('', {
               username: 'New Activity',
