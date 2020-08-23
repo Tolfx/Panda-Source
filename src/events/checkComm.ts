@@ -20,6 +20,38 @@ const path = paths.NewComm;
 const log = new CustomLogger();
 
 export default class CheckComm {
+  private linksHlstats(args: any): Promise<string> {
+    if (args.includes(`STEAM_`)) {
+      return new Promise((resolve) => {
+        resolve(
+          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=uniqueid&game=`
+        );
+      });
+    } else {
+      return new Promise((resolve) => {
+        resolve(
+          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=player&game=`
+        );
+      });
+    }
+  }
+
+  private linksSourceban(args: any): Promise<string> {
+    if (args.includes(`STEAM_`)) {
+      return new Promise((resolve) => {
+        resolve(
+          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
+        );
+      });
+    } else {
+      return new Promise((resolve) => {
+        resolve(
+          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=name`
+        );
+      });
+    }
+  }
+
   private newComms($) {
     let A_storingData = [];
     let count = 1;
@@ -78,6 +110,7 @@ export default class CheckComm {
       )
         .text()
         .trim();
+      let type = $(`#banlist > table > tbody > tr:nth-child(${i + count}) > td`).attr('src');
 
       const content = fs.readFileSync(path);
       const Checker = JSON.parse(content);
@@ -126,14 +159,17 @@ export default class CheckComm {
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
             const embed = new MessageEmbed().setColor('#D7D040').setDescription(stripIndents`
-                                **New Comm**
-                                
-                                **Name of user:** \`${result[j].NameOfUser}\`
-                                **SteamID:** \`${result[j].SteamID}\`
-                                **Length:** \`${result[j].BanLength}\`
-                                **Reason:** \`${result[j].Reason}\`
-                                
-                                **Admin:** \`${result[j].Admin}\``);
+                **New Comm**
+                
+                **Name of user:** \`${result[j].NameOfUser}\`
+                **SteamID:** \`${result[j].SteamID}\`
+                **Length:** \`${result[j].BanLength}\`
+                **Reason:** \`${result[j].Reason}\`
+                
+                **Admin:** \`${result[j].Admin}\`
+                
+                [SourceBan](${this.linksSourceban(result[j].steamID)})
+                [Hlstats](${this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
               username: 'New Ban',

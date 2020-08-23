@@ -20,6 +20,38 @@ const path = paths.NewBan;
 const log = new CustomLogger();
 
 export default class CheckBans {
+  private linksHlstats(args: any): Promise<string> {
+    if (args.includes(`STEAM_`)) {
+      return new Promise((resolve) => {
+        resolve(
+          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=uniqueid&game=`
+        );
+      });
+    } else {
+      return new Promise((resolve) => {
+        resolve(
+          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=player&game=`
+        );
+      });
+    }
+  }
+
+  private linksSourceban(args: any): Promise<string> {
+    if (args.includes(`STEAM_`)) {
+      return new Promise((resolve) => {
+        resolve(
+          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
+        );
+      });
+    } else {
+      return new Promise((resolve) => {
+        resolve(
+          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=name`
+        );
+      });
+    }
+  }
+
   private newBan($) {
     let A_storingData = [];
     let count = 1;
@@ -131,7 +163,10 @@ export default class CheckBans {
                         **Length:** \`${result[j].BanLength}\`
                         **Reason:** \`${result[j].Reason}\`
                         
-                        **Admin:** \`${result[j].Admin}\``);
+                        **Admin:** \`${result[j].Admin}\`
+
+                        [SourceBan](${this.linksSourceban(result[j].steamID)})
+                        [Hlstats](${this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
               username: 'New Ban',
