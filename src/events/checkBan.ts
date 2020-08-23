@@ -145,34 +145,36 @@ export default class CheckBans {
    */
   public async checker(url: string) {
     setInterval(() => {
-      request(url, (error, response, html) => {
+      request(url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
           const $ = cheerio.load(html);
 
           let result = this.newBan($);
+          if (result.length === 0) return log.normal(`Found: 0 new bans..`, true);
           const webhookClient = new WebhookClient(D_ID, D_Token);
-          log.normal(`Found: ${result.length} new bans..`, true);
 
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
             const embed = new MessageEmbed().setColor('#D75040').setDescription(stripIndents`
-                        **New Ban**
-                        
-                        **Name of user:** \`${result[j].NameOfUser}\`
-                        **SteamID:** \`${result[j].SteamID}\`
-                        **Length:** \`${result[j].BanLength}\`
-                        **Reason:** \`${result[j].Reason}\`
-                        
-                        **Admin:** \`${result[j].Admin}\`
+                    **New Ban**
+                    
+                    **Name of user:** \`${result[j].NameOfUser}\`
+                    **SteamID:** \`${result[j].SteamID}\`
+                    **Length:** \`${result[j].BanLength}\`
+                    **Reason:** \`${result[j].Reason}\`
+                    
+                    **Admin:** \`${result[j].Admin}\`
 
-                        [SourceBan](${this.linksSourceban(result[j].steamID)})
-                        [Hlstats](${this.linksHlstats(result[j].SteamID)})`);
+                    [SourceBan](${await this.linksSourceban(result[j].steamID)})
+                    [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
               username: 'New Ban',
               embeds: [embed],
             });
           }
+        } else {
+          log.warn(response.statusCode);
         }
       });
     }, 600000);

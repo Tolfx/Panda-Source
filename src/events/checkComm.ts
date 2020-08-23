@@ -148,13 +148,13 @@ export default class CheckComm {
    */
   public async checker(url: string) {
     setInterval(() => {
-      request(url, (error, response, html) => {
+      request(url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
           const $ = cheerio.load(html);
 
           let result = this.newComms($);
+          if (result.length === 0) return log.normal(`Found: 0 new comms..`, true);
           const webhookClient = new WebhookClient(D_ID, D_Token);
-          log.normal(`Found: ${result.length} new comms..`, true);
 
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
@@ -168,8 +168,8 @@ export default class CheckComm {
                 
                 **Admin:** \`${result[j].Admin}\`
                 
-                [SourceBan](${this.linksSourceban(result[j].steamID)})
-                [Hlstats](${this.linksHlstats(result[j].SteamID)})`);
+                [SourceBan](${await this.linksSourceban(result[j].steamID)})
+                [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
               username: 'New Ban',
