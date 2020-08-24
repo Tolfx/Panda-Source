@@ -21,35 +21,19 @@ const log = new CustomLogger();
 
 export default class CheckComm {
   private linksHlstats(args: any): Promise<string> {
-    if (args.includes(`STEAM_`)) {
       return new Promise((resolve) => {
         resolve(
           `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=uniqueid&game=`
         );
       });
-    } else {
-      return new Promise((resolve) => {
-        resolve(
-          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=player&game=`
-        );
-      });
-    }
   }
 
   private linksSourceban(args: any): Promise<string> {
-    if (args.includes(`STEAM_`)) {
       return new Promise((resolve) => {
         resolve(
           `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
         );
       });
-    } else {
-      return new Promise((resolve) => {
-        resolve(
-          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=name`
-        );
-      });
-    }
   }
 
   private newComms($) {
