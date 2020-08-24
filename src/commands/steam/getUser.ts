@@ -14,7 +14,7 @@ export class getUserSteam {
 
     let embed = new MessageEmbed().setColor(0x9c98d9);
     let reg = new RegExp('^[0-9]+$');
-    if (args[0].includes('STEAM_') || args[0].includes('[U:') || args[0].length === reg) {
+    if (args[0].includes('STEAM_') || args[0].includes('[U:') || typeof Number) {
       let steamID64 = this.getID64(args[0]);
       this.getInfo64(steamID64, (err, result) => {
         if (err) return message.channel.send(`${err}`);
@@ -121,7 +121,9 @@ export class getUserSteam {
       (error, response, body) => {
         if (!error && response.statusCode == 200) {
           parseString(body, (err, result) => {
-            if (!result.response === undefined) {
+            if (result.response) {
+              return callback(new Error('No matching steamID64'));
+            } else {
               let steamID64 = result.profile.steamID64[0];
               let avatar = result.profile.avatarMedium[0];
               let privacy = result.profile.privacyState[0];
@@ -137,8 +139,6 @@ export class getUserSteam {
                 joined,
                 onlineState,
               });
-            } else {
-              return callback(new Error('No matching steamID64'));
             }
           });
         }

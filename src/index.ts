@@ -17,21 +17,32 @@ import { newThread } from './events/newThread';
 import { latestActivity } from './events/latestActivity';
 import CheckComm from './events/checkComm';
 import { CustomLogger } from './lib/customLogs';
-import { shoutBox } from './events/shoutbox';
 import config from '../config.json';
 import { endRacism } from './events/order66';
+import mongoose from 'mongoose';
+
+mongoose.connect(config.General.MongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 
 const prefix = config.General.prefix;
 
 // New modules and shit idk
 const client = new Client();
+const activity = new latestActivity();
 const checkban = new CheckBans();
 const checkcomm = new CheckComm();
 const newthread = new newThread();
-const activity = new latestActivity();
-const shoutbox = new shoutBox();
 const log = new CustomLogger();
 const commandhandler = new commandHandler();
+
+const db = mongoose.connection;
+//On error [MongoDB]
+db.on('error', (error) => log.warn(error));
+//On open [MongoDB]
+db.once('open', () => log.normal('Connected to database'));
 
 //When bot is ready.
 client.on('ready', () => {

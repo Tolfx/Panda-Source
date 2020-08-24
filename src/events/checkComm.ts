@@ -21,19 +21,19 @@ const log = new CustomLogger();
 
 export default class CheckComm {
   private linksHlstats(args: any): Promise<string> {
-      return new Promise((resolve) => {
-        resolve(
-          `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=uniqueid&game=`
-        );
-      });
+    return new Promise((resolve) => {
+      resolve(
+        `https://hlstats.panda-community.com/hlstats.php?mode=search&q=${args}&st=uniqueid&game=`
+      );
+    });
   }
 
   private linksSourceban(args: any): Promise<string> {
-      return new Promise((resolve) => {
-        resolve(
-          `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
-        );
-      });
+    return new Promise((resolve) => {
+      resolve(
+        `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
+      );
+    });
   }
 
   private newComms($) {
@@ -152,7 +152,7 @@ export default class CheckComm {
                 
                 **Admin:** \`${result[j].Admin}\`
                 
-                [SourceBan](${await this.linksSourceban(result[j].steamID)})
+                [SourceBan](${await this.linksSourceban(result[j].SteamID)})
                 [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
