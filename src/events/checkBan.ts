@@ -31,7 +31,7 @@ export default class CheckBans {
   private linksSourceban(args: any): Promise<string> {
     return new Promise((resolve) => {
       resolve(
-        `https://bans.panda-community.com/index.php?p=commslist&advSearch=${args}&advType=steamid`
+        `https://bans.panda-community.com/index.php?p=banlist&advSearch=${args}&advType=steamid`
       );
     });
   }
