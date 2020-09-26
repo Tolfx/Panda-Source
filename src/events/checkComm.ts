@@ -12,10 +12,12 @@ import request from 'request';
 import paths from '../types/paths';
 import { getToken, getID } from '../lib/webhook';
 import config from '../../config.json';
+import { stalkGold } from '../events/stalkGold';
 
 let D_ID = getID(config.Discord.NewComms);
 let D_Token = getToken(config.Discord.NewComms);
 const path = paths.NewComm;
+const goldkek = new stalkGold();
 
 const log = new CustomLogger();
 
@@ -142,6 +144,11 @@ export default class CheckComm {
 
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
+
+            if (result[j].Admin === 'Gold') {
+              goldkek.goldDidAThing(result[j], 'comm');
+            }
+            
             const embed = new MessageEmbed().setColor('#D7D040').setDescription(stripIndents`
                 **New Comm**
                 

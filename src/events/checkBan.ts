@@ -12,10 +12,12 @@ import request from 'request';
 import paths from '../types/paths';
 import { getToken, getID } from '../lib/webhook';
 import config from '../../config.json';
+import { stalkGold } from '../events/stalkGold';
 
 let D_ID = getID(config.Discord.NewBans);
 let D_Token = getToken(config.Discord.NewBans);
 const path = paths.NewBan;
+const goldkek = new stalkGold();
 
 const log = new CustomLogger();
 
@@ -139,6 +141,11 @@ export default class CheckBans {
 
           for (var j = 0; j < result.length; ++j) {
             fs.writeFileSync(path, JSON.stringify(result[0]));
+
+            if (result[j].Admin === 'Gold') {
+              goldkek.goldDidAThing(result[j], 'ban');
+            }
+
             const embed = new MessageEmbed().setColor('#D75040').setDescription(stripIndents`
                     **New Ban**
                     
