@@ -136,7 +136,7 @@ export default class CheckBans {
           const $ = cheerio.load(html);
 
           let result = this.newBan($);
-          if (result.length === 0) return log.normal(`Found: 0 new bans..`, true);
+          log.normal(`Found: ${result ? result.length : "0"} new bans..`, true);
           const webhookClient = new WebhookClient(D_ID, D_Token);
 
           for (var j = 0; j < result.length; ++j) {
@@ -146,18 +146,20 @@ export default class CheckBans {
               goldkek.goldDidAThing(result[j], 'ban');
             }
 
-            const embed = new MessageEmbed().setColor('#D75040').setDescription(stripIndents`
-                    **New Ban**
-                    
-                    **Name of user:** \`${result[j].NameOfUser}\`
-                    **SteamID:** \`${result[j].SteamID}\`
-                    **Length:** \`${result[j].BanLength}\`
-                    **Reason:** \`${result[j].Reason}\`
-                    
-                    **Admin:** \`${result[j].Admin}\`
+            const embed = new MessageEmbed()
+            .setColor('#D75040')
+            .setDescription(stripIndents`
+              **New Ban**
+              
+              **Name of user:** \`${result[j].NameOfUser}\`
+              **SteamID:** \`${result[j].SteamID}\`
+              **Length:** \`${result[j].BanLength}\`
+              **Reason:** \`${result[j].Reason}\`
+              
+              **Admin:** \`${result[j].Admin}\`
 
-                    [SourceBan](${await this.linksSourceban(result[j].SteamID)})
-                    [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
+              [SourceBan](${await this.linksSourceban(result[j].SteamID)})
+              [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
               username: 'New Ban',
