@@ -5,9 +5,21 @@ import config from '../../config.json';
 import { getToken, getID } from '../lib/webhook';
 
 export class CustomLogger {
+
+  private webhookURL: String = config.Discord.logs;
+
+  /**
+   * 
+   * @param webhook The webhook where it will log, optional.
+   */
+  constructor(webhook?: String) {
+    this.webhookURL = webhook
+  }
+
+
   private Webhook(info, color: string) {
-    let ID = getID(config.Discord.logs);
-    let Token = getToken(config.Discord.logs);
+    let ID = getID(this.webhookURL);
+    let Token = getToken(this.webhookURL);
 
     const webhookClient = new WebhookClient(ID, Token);
 
