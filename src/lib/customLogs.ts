@@ -6,14 +6,14 @@ import { getToken, getID } from '../lib/webhook';
 
 export class CustomLogger {
 
-  private webhookURL: String = config.Discord.logs;
+  private webhookURL = config.Discord.logs;
 
   /**
    * 
    * @param webhook The webhook where it will log, optional.
    */
-  constructor(webhook?: String) {
-    this.webhookURL = webhook
+  constructor(webhook?) {
+    this.webhookURL = webhook ? webhook : this.webhookURL
   }
 
 
