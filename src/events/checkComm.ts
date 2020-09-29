@@ -41,62 +41,61 @@ export default class CheckComm {
   private newComms($) {
     let A_storingData = [];
     let count = 1;
-    for (var i = 2; i < 50; ++i) {
+    for (var i = 2; i < 40; ++i) {
+
       let name = $(
         `#banlist > table > tbody > tr:nth-child(${
           i - 1 + count
         }) > td:nth-child(3) > div:nth-child(1)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+      
       let steamID = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(3) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+
       let invoked = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(6) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+
       let length = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(7) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+
       let reason = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(9) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+
       let admin = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(10) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
+      ).text().trim();
+
       let server = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`
       ).attr('id');
+
       let totaBlocks = $(
         `#banlist > table > tbody > tr:nth-child(${
           i + count
         }) > td > div > table > tbody > tr:nth-child(12) > td:nth-child(2)`
-      )
-        .text()
-        .trim();
-      let type = $(`#banlist > table > tbody > tr:nth-child(${i + count}) > td`).attr('src');
+      ).text().trim();
+
+      let type: String | Boolean = $(`#banlist > table > tbody > tr:nth-child(${count*2}) td:nth-child(1)`)
+      .html();
+
+      type = type.toString().includes("class=\"fas fa-comment-slash fa-lg\"")
+      console.log(type);
 
       const content = fs.readFileSync(path);
       const Checker = JSON.parse(content);
@@ -114,6 +113,7 @@ export default class CheckComm {
         Reason: reason,
         Server: server,
         Invoked: invoked,
+        Type: type
       };
 
       if (objectJson.Invoked !== Checker.Invoked) {
@@ -136,6 +136,8 @@ export default class CheckComm {
     setInterval(() => {
       request(url, async (error, response, html) => {
         if (!error && response.statusCode == 200) {
+          const mutePicture = "https://cdn.discordapp.com/attachments/624635756635226133/760594654365876274/mute.png"
+          const gagPicture = "https://cdn.discordapp.com/attachments/624635756635226133/760594335832997958/gag.png"
           const $ = cheerio.load(html);
 
           let result = this.newComms($);
@@ -151,6 +153,7 @@ export default class CheckComm {
             
             const embed = new MessageEmbed()
             .setColor('#D7D040')
+            .setThumbnail(result[j].Type ? gagPicture : mutePicture)
             .setDescription(stripIndents`
               **New Comm**
               
@@ -165,7 +168,7 @@ export default class CheckComm {
               [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
 
             webhookClient.send('', {
-              username: 'New Ban',
+              username: 'New comm',
               embeds: [embed],
             });
           }
