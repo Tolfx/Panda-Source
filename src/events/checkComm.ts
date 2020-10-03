@@ -151,38 +151,35 @@ export default class CheckComm {
             }
             
             let embed;
-            if(!wantsBigIcons)
-            {
+            if (!wantsBigIcons) {
+            
               embed = new MessageEmbed()
-            .setColor('#D7D040')
-            .setAuthor("New Comms", result[j].Type ? gagPicture : mutePicture)
-            // .setThumbnail(result[j].Type ? gagPicture : mutePicture)
-            .setDescription(stripIndents`
-              
-              **Name of user:** \`${result[j].NameOfUser}\`
-              **SteamID:** \`${result[j].SteamID}\`
-              **Length:** \`${result[j].BanLength}\`
-              **Reason:** \`${result[j].Reason}\`
-              
-              **Admin:** \`${result[j].Admin}\`
-              
-              [SourceBan](${await this.linksSourceban(result[j].SteamID)})
-              [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
+                .setColor('#D7D040')
+                .setAuthor("New Comms", result[j].Type ? gagPicture : mutePicture)
+                .setDescription(stripIndents`
+                **Name of user:** \`${result[j].NameOfUser}\`
+                **SteamID:** \`${result[j].SteamID}\`
+                **Length:** \`${result[j].BanLength}\`
+                **Reason:** \`${result[j].Reason}\`
+                
+                **Admin:** \`${result[j].Admin}\`
+                
+                [SourceBan](${await this.linksSourceban(result[j].SteamID)})
+                [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
             } else {
               embed = new MessageEmbed()
-              .setColor('#D7D040')
-              .setThumbnail(result[j].Type ? gagPicture : mutePicture)
-              .setDescription(stripIndents`
-              
-              **Name of user:** \`${result[j].NameOfUser}\`
-              **SteamID:** \`${result[j].SteamID}\`
-              **Length:** \`${result[j].BanLength}\`
-              **Reason:** \`${result[j].Reason}\`
-              
-              **Admin:** \`${result[j].Admin}\`
-              
-              [SourceBan](${await this.linksSourceban(result[j].SteamID)})
-              [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
+                .setColor('#D7D040')
+                .setThumbnail(result[j].Type ? gagPicture : mutePicture)
+                .setDescription(stripIndents`
+                **Name of user:** \`${result[j].NameOfUser}\`
+                **SteamID:** \`${result[j].SteamID}\`
+                **Length:** \`${result[j].BanLength}\`
+                **Reason:** \`${result[j].Reason}\`
+                
+                **Admin:** \`${result[j].Admin}\`
+                
+                [SourceBan](${await this.linksSourceban(result[j].SteamID)})
+                [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
             }
 
             webhookClient.send('', {
