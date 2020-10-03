@@ -8,4 +8,4 @@ logs.txt
 /src/private
 /src/exports
 /backup
-./config.json
+/config.json
