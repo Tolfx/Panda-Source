@@ -93,9 +93,7 @@ export default class CheckComm {
 
       let type: String | Boolean = $(`#banlist > table > tbody > tr:nth-child(${count*2}) td:nth-child(1)`)
       .html();
-
       type = type.toString().includes("class=\"fas fa-comment-slash fa-lg\"")
-      console.log(type);
 
       const content = fs.readFileSync(path);
       const Checker = JSON.parse(content);
