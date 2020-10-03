@@ -16,10 +16,9 @@ const log = new CustomLogger();
 fs.readFile('config.json', (err, data) => {
   if(!data) {
     log.warn('No config file.. creating one..');
-    const data = fs.readFileSync("default/config.json");
-    let parsedData = JSON.parse(data);
+    let parsedData = JSON.parse(fs.readFileSync("default/config.json", "utf8"));
     parsedData = JSON.stringify(parsedData);
-    
+
     fs.writeFile("config.json", parsedData, (err) => {
       if (err) log.warn(err);
       log.debug(`Created config file.`);
@@ -32,8 +31,7 @@ fs.readdir("./json", (err, data) => {
     log.warn(`No json folder.. creating one..`);
     fs.mkdirSync("./json");
     fs.readdirSync("default/json").forEach((file) => {
-      const data = fs.readFileSync(`default/json/${file}`);
-      let parsedData = JSON.parse(data);
+      let parsedData = JSON.parse(fs.readFileSync(`default/json/${file}`, "utf8"));
       parsedData = JSON.stringify(parsedData);
 
       fs.writeFile(`./json/${file}`, parsedData, err => {
