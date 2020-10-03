@@ -139,8 +139,8 @@ export default class newBlocks {
 
   private async blocksNew(client, message, args) {
     if (!args[0]) return message.channel.send('Please mention an admin');
-    if (args[0] != this.adminIDSB.(args[0])) return message.channel.send('Invalid admin');
-    const newcomm = await this.CommsAmount();
+    if (args[0] != this.adminIDSB[args[0]]) { return message.channel.send('Invalid admin');}
+    const newcomm = await this.CommsAmount(this.adminIDSB[args[0]]);
   }
 
   /**

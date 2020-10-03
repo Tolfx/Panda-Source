@@ -64,7 +64,9 @@ export class stalkGold {
     [SourceBan](${type === 'comm' ? await this.linksSourcebanComm(body.SteamID) : await this.linksSourcebanBan(body.SteamID)})
     [Hlstats](${await this.linksHlstats(body.SteamID)})
     
-    idk man.. demote him /shrug`;
+    idk man.. demote him /shrug
+    
+    literally demote him right now.`;
 
     this.sendWebhook(message);
   }

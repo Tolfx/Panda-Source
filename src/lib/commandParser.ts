@@ -35,6 +35,7 @@ export class CommandParser {
 
         if (key !== 'sku') {
           const lowerCase = (value as string).toLowerCase();
+          
           if (/^-?\d+$/.test(lowerCase)) {
             value = parseInt(lowerCase);
           } else if (/^-?\d+(\.\d+)?$/.test(lowerCase)) {

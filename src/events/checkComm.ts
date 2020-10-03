@@ -16,6 +16,7 @@ import { stalkGold } from '../events/stalkGold';
 
 let D_ID = getID(config.Discord.NewComms);
 let D_Token = getToken(config.Discord.NewComms);
+let wantsBigIcons = config.Boolean["wantsBigCommIcons"];
 const path = paths.NewComm;
 const goldkek = new stalkGold();
 
@@ -149,11 +150,14 @@ export default class CheckComm {
               goldkek.goldDidAThing(result[j], 'comm');
             }
             
-            const embed = new MessageEmbed()
+            let embed;
+            if(!wantsBigIcons)
+            {
+              embed = new MessageEmbed()
             .setColor('#D7D040')
-            .setThumbnail(result[j].Type ? gagPicture : mutePicture)
+            .setAuthor("New Comms", result[j].Type ? gagPicture : mutePicture)
+            // .setThumbnail(result[j].Type ? gagPicture : mutePicture)
             .setDescription(stripIndents`
-              **New Comm**
               
               **Name of user:** \`${result[j].NameOfUser}\`
               **SteamID:** \`${result[j].SteamID}\`
@@ -164,6 +168,22 @@ export default class CheckComm {
               
               [SourceBan](${await this.linksSourceban(result[j].SteamID)})
               [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
+            } else {
+              embed = new MessageEmbed()
+              .setColor('#D7D040')
+              .setThumbnail(result[j].Type ? gagPicture : mutePicture)
+              .setDescription(stripIndents`
+              
+              **Name of user:** \`${result[j].NameOfUser}\`
+              **SteamID:** \`${result[j].SteamID}\`
+              **Length:** \`${result[j].BanLength}\`
+              **Reason:** \`${result[j].Reason}\`
+              
+              **Admin:** \`${result[j].Admin}\`
+              
+              [SourceBan](${await this.linksSourceban(result[j].SteamID)})
+              [Hlstats](${await this.linksHlstats(result[j].SteamID)})`);
+            }
 
             webhookClient.send('', {
               username: 'New comm',

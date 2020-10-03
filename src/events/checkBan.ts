@@ -16,6 +16,7 @@ import { stalkGold } from '../events/stalkGold';
 
 let D_ID = getID(config.Discord.NewBans);
 let D_Token = getToken(config.Discord.NewBans);
+
 const path = paths.NewBan;
 const goldkek = new stalkGold();
 
