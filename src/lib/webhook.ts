@@ -27,23 +27,17 @@ export function getWebHook(url, callback: (err: null | Error, Token?, ID?) => vo
   callback(null, token, ID);
 }
 
-export function getToken(url) {
+export function getToken(url: String) {
   let removeURL = url.replace('https://discordapp.com/api/webhooks/', '');
-
   let parser = removeURL.split(/\//g);
-
   let token = parser[1];
-  let ID = parser[0];
 
   return token;
 }
 
-export function getID(url) {
+export function getID(url: String) {
   let removeURL = url.replace('https://discordapp.com/api/webhooks/', '');
-
   let parser = removeURL.split(/\//g);
-
-  let token = parser[1];
   let ID = parser[0];
 
   return ID;
