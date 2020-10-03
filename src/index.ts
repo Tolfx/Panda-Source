@@ -9,6 +9,42 @@ Ongoing..
 
 */
 
+import fs from "fs";
+import { CustomLogger } from "./lib/customLogs";
+const log = new CustomLogger();
+
+fs.readFile('config.json', (err, data) => {
+  if(!data) {
+    log.warn('No config file.. creating one..');
+    const data = fs.readFileSync("default/config.json");
+    let parsedData = JSON.parse(data);
+    parsedData = JSON.stringify(parsedData);
+    
+    fs.writeFile("config.json", parsedData, (err) => {
+      if (err) log.warn(err);
+      log.debug(`Created config file.`);
+    })
+  }
+});
+
+fs.readdir("./json", (err, data) => {
+  if (!data) {
+    log.warn(`No json folder.. creating one..`);
+    fs.mkdirSync("./json");
+    fs.readdirSync("default/json").forEach((file) => {
+      const data = fs.readFileSync(`default/json/${file}`);
+      let parsedData = JSON.parse(data);
+      parsedData = JSON.stringify(parsedData);
+
+      fs.writeFile(`./json/${file}`, parsedData, err => {
+        if (err) log.warn(err);
+        log.debug(`Created ${file}`);
+      })
+    })
+  }
+})
+
+
 import { Client } from "discord.js";
 import CheckBans from "./events/checkBan";
 import { stripIndent } from "common-tags";
@@ -16,10 +52,9 @@ import { commandHandler } from "./commands/commandHandler";
 import { newThread } from "./events/newThread";
 import { latestActivity } from "./events/latestActivity";
 import CheckComm from "./events/checkComm";
-import { CustomLogger } from "./lib/customLogs";
+
 import config from "../config.json";
 import mongoose from "mongoose";
-import fs from "fs";
 
 mongoose.connect(config.General.MongoDB, {
   useNewUrlParser: true,
@@ -35,7 +70,6 @@ const activity = new latestActivity();
 const checkban = new CheckBans();
 const checkcomm = new CheckComm();
 const newthread = new newThread();
-const log = new CustomLogger();
 const commandhandler = new commandHandler();
 
 const db = mongoose.connection;
