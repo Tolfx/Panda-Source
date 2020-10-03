@@ -27,7 +27,8 @@
         "Enable_NewThread_Event": false,
         "Enable_LatestActivity_Event": false,
         "Enable_CheckComm_Event": false,
-        "Enable_CheckBans_Event": false
+        "Enable_CheckBans_Event": false,
+        "wantsBigCommIcons": false 
     },
     
     "profilePicturePath": "",
