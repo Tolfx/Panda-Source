@@ -7,4 +7,5 @@ logs.txt
 /dist
 /src/private
 /src/exports
+/backup
 config.json
