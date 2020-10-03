@@ -153,9 +153,9 @@ export default class CheckComm {
             
             const embed = new MessageEmbed()
             .setColor('#D7D040')
-            .setThumbnail(result[j].Type ? gagPicture : mutePicture)
+            .setAuthor("New Comms", result[j].Type ? gagPicture : mutePicture)
+            // .setThumbnail(result[j].Type ? gagPicture : mutePicture)
             .setDescription(stripIndents`
-              **New Comm**
               
               **Name of user:** \`${result[j].NameOfUser}\`
               **SteamID:** \`${result[j].SteamID}\`
