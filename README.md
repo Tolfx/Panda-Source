@@ -51,7 +51,8 @@ To use this bot you need to compile the code. Therefor you need typescript.
         "Enable_NewThread_Event": false,
         "Enable_LatestActivity_Event": false,
         "Enable_CheckComm_Event": false,
-        "Enable_CheckBans_Event": false
+        "Enable_CheckBans_Event": false,
+        "wantsBigCommIcons": false
     },
     
     "profilePicturePath": "", //The path for your normal profile picture when using command "normal"
