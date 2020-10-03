@@ -20,7 +20,7 @@ export class steamPrivacy {
     });
 
     const options = {
-      uri: 'https://steamcommunity.com/id/my/ajaxsetprivacy',
+      url: 'https://steamcommunity.com/id/my/ajaxsetprivacy',
       method: 'POST',
       json: true,
       formData: {
