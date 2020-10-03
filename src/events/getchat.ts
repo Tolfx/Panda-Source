@@ -37,8 +37,13 @@ function newChat($) {
       .text()
       .trim();
 
-    const content = fs.readFileSync(path);
-    const Checker = JSON.parse(content);
+    // const content = fs.readFileSync(path);
+    // readfilesync is no no i believe
+    let Checker;
+    fs.readFile(path, "utf-8", (err,data) => {
+      if(err) throw err;
+      Checker = JSON.parse(data);
+    })
 
     let objectJson = {
       Time: time,
