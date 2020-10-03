@@ -43,8 +43,7 @@ export class staffPage {
       // If the cookies file exists, read the cookies.
       const previousSession = fs.existsSync(path);
       if (previousSession) {
-        const content = fs.readFileSync(path);
-        const cookiesArr = JSON.parse(content);
+        const cookiesArr = JSON.parse(fs.readFileSync(path, "utf8"));
         if (cookiesArr.length !== 0) {
           if (!cookiesArr[0]) {
             console.log('No cookies');

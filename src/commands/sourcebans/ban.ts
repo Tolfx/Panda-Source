@@ -74,8 +74,7 @@ export class sourceBan {
 
       //If there are any..
       if (previousSession) {
-        const content = fs.readFileSync(path);
-        const cookiesArr = JSON.parse(content);
+        const cookiesArr = JSON.parse(fs.readFileSync(path, "utf8"));
 
         //If the cookies have no length
         if (cookiesArr.length !== 0) {
