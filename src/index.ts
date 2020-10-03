@@ -19,6 +19,7 @@ import CheckComm from "./events/checkComm";
 import { CustomLogger } from "./lib/customLogs";
 import config from "../config.json";
 import mongoose from "mongoose";
+import fs from "fs";
 
 mongoose.connect(config.General.MongoDB, {
   useNewUrlParser: true,
@@ -116,9 +117,12 @@ if (config.Boolean.Enable_CheckBans_Event) {
   log.normal('Starting "checkBan" event.');
 }
 
-require('./private/checkTrialsLoop')();
+fs.readFile(`./src/private/checkTrialsLoop.ts`, async (err, data) => {
+  if (data) {
+    require('./private/checkTrialsLoop')();
+  } else {
+    log.warn(`Not starting checkTrialsLoop`)
+  }
+})
 //Event end
-
-
-
 client.login(config.General.tokenDiscord);
