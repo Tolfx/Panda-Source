@@ -18,52 +18,53 @@ To use this bot you need to compile the code. Therefor you need typescript.
 
 ### Setting up
 
+Run the bat file, and the bot will create the `config.json` file, and then configure it on your likings.
+
 ## Configure
-```js
+```json
 {
     "General": {
-        "prefix": "!", // The prefix for the bot
-        "discord_Owner_ID": "", // Your ID on discord
-        "tokenDiscord": "" // The token for the bot
+      "prefix": "!",
+      "discord_Owner_ID": "",
+      "tokenDiscord": "",
+      "MongoDB": ""
     },
-
-    //All of these are webhooks, and if you want to gather data you need to add discord webhooks.
+  
     "Discord": {
-        "logs": "", 
-        "ShoutboxURL": "",
-        "LatestActivity": "",
-        "NewComms": "",
-        "NewBans": "",
-	    "NewThread": "",
-
-        "Chatlog_04": "",
-        "EndRacism": ""
+      "logs": "",
+      "ShoutboxURL": "",
+      "LatestActivity": "",
+      "NewComms": "",
+      "NewBans": "",
+      "NewThread": "",
+      "goldHook": "",
+      "Chatlog_04": "",
+      "EndRacism": "",
+      "authToken": ""
     },
-
+  
     "Steam": {
-        "name": "", //Steam name
-        "password": "", //Steam password
-        "sharedSecret": "" //Shared secret
+      "name": "",
+      "password": "",
+      "sharedSecret": ""
     },
-
-    //If you want to enable an event you use true or false
+  
     "Boolean": {
-        "Enable_NewThread_Event": false,
-        "Enable_LatestActivity_Event": false,
-        "Enable_CheckComm_Event": false,
-        "Enable_CheckBans_Event": false,
-        "wantsBigCommIcons": false
+      "Enable_Shoutbox_Event": false,
+      "Enable_NewThread_Event": false,
+      "Enable_LatestActivity_Event": true,
+      "Enable_CheckComm_Event": true,
+      "Enable_CheckBans_Event": true,
+      "wantsBigCommIcons": false
     },
-    
-    "profilePicturePath": "", //The path for your normal profile picture when using command "normal"
-    "underCoverProfile": "", //The path for your undercover profiles pictures.
-    "numberOfPics": 0, //How many profile pictures are you using?
-
-    //When going undercover the bot picks a random name, aka these under here.
-    "names": 
-    [
-		"name1",
-		"name2"
+  
+    "profilePicturePath": "",
+    "underCoverProfile": "",
+    "numberOfPics": 1,
+  
+    "names": [
+        "test",
+        "test2"
     ]
 }
 ```
