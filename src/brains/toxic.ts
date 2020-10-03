@@ -10,8 +10,7 @@ let net = new brain.recurrent.RNN({
 let path = paths.toxicBrain;
 
 export function bad(message) {
-  const content = fs.readFileSync(path);
-  const Checker = JSON.parse(content);
+  const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
   Checker.push({
     input: message,
     output: 'Toxic',
@@ -20,8 +19,7 @@ export function bad(message) {
 }
 
 export function good(message) {
-  const content = fs.readFileSync(path);
-  const Checker = JSON.parse(content);
+  const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
   Checker.push({
     input: message,
     output: 'Not Toxic',
@@ -30,8 +28,7 @@ export function good(message) {
 }
 
 export function guess(message) {
-  const content = fs.readFileSync(path);
-  const Checker = JSON.parse(content);
+  const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
   let configlol = {
     // Defaults values --> expected validation
     iterations: 100, // the maximum times to iterate the training data --> number greater than 0
