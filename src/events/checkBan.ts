@@ -98,8 +98,7 @@ export default class CheckBans {
         .text()
         .trim();
 
-      const content = fs.readFileSync(path);
-      const Checker = JSON.parse(content);
+      const Checker = JSON.parse(fs.readFileSync(path, 'utf8'));
 
       if (server === undefined) {
         server = 'Web Ban';

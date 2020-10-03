@@ -43,8 +43,7 @@ export class newThread {
         `#top > div.p-body > div > div > div > div.p-body-sidebar > div.uix_sidebarInner > div > div:nth-child(5) > div > ul > li:nth-child(${i}) > div > div.contentRow-main.contentRow-main--close > div:nth-child(4) > a`
       ).attr('href');
 
-      const content = fs.readFileSync(path);
-      const Checker = JSON.parse(content);
+      const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
 
       let objectJson = {
         title: title,

@@ -53,8 +53,7 @@ export class latestActivity {
           }
           */
 
-          const content = fs.readFileSync(path);
-          const Checker = JSON.parse(content);
+          const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
 
           let objectJson = {
             Activty: name,
