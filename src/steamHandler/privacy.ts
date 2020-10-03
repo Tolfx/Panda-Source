@@ -5,8 +5,7 @@ import request from 'request';
 export class steamPrivacy {
   public setPrivacy() {
     let path = 'cookies_SteamEdit.json';
-    const content = fs.readFileSync(path);
-    const cookiesArr = JSON.parse(content);
+    const cookiesArr = JSON.parse(fs.readFileSync(path, "utf8"));
 
     let sessionID = cookiesArr[1].value;
 
