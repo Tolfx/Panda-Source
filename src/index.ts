@@ -9,17 +9,16 @@ Ongoing..
 
 */
 
-import { Client } from 'discord.js';
-import CheckBans from './events/checkBan';
-import { stripIndent } from 'common-tags';
-import { commandHandler } from './commands/commandHandler';
-import { newThread } from './events/newThread';
-import { latestActivity } from './events/latestActivity';
-import CheckComm from './events/checkComm';
-import { CustomLogger } from './lib/customLogs';
-import config from '../config.json';
-import { endRacism } from './events/order66';
-import mongoose from 'mongoose';
+import { Client } from "discord.js";
+import CheckBans from "./events/checkBan";
+import { stripIndent } from "common-tags";
+import { commandHandler } from "./commands/commandHandler";
+import { newThread } from "./events/newThread";
+import { latestActivity } from "./events/latestActivity";
+import CheckComm from "./events/checkComm";
+import { CustomLogger } from "./lib/customLogs";
+import config from "../config.json";
+import mongoose from "mongoose";
 
 mongoose.connect(config.General.MongoDB, {
   useNewUrlParser: true,
@@ -40,22 +39,22 @@ const commandhandler = new commandHandler();
 
 const db = mongoose.connection;
 //On error [MongoDB]
-db.on('error', (error) => log.warn(error));
+db.on("error", (error) => log.warn(error));
 //On open [MongoDB]
-db.once('open', () => log.normal('Connected to database'));
+db.once("open", () => log.normal("Connected to database"));
 
 //When bot is ready.
-client.on('ready', () => {
-  log.normal('Im online');
+client.on("ready", () => {
+  log.normal("Im online");
 
   client.user
-    .setPresence({ activity: { name: `${prefix}help` }, status: 'online' })
+    .setPresence({ activity: { name: `${prefix}help` }, status: "online" })
     .then()
     .catch(console.error);
 });
 
 //All of the messages gets through here, and if a message starts with config.prefix it will execute.
-client.on('message', async (message) => {
+client.on("message", async (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -70,20 +69,22 @@ client.on('message', async (message) => {
   }
 });
 
-client.on('guildMemberAdd', (member) => {
-  let memberRole = member.guild.roles.cache.find((r) => r.id === '734140557487636561');
+client.on("guildMemberAdd", (member) => {
+  let memberRole = member.guild.roles.cache.find((r) =>
+    r.id === "734140557487636561"
+  );
 
   member.roles.add(memberRole);
   log.normal(
     `\nNew member.\nWith username: ${member.user.username}\nWith tag: ${member.user.tag}\nWith ID: ${member.id}\nJoined at: ${member.joinedAt}`,
-    true
+    true,
   );
 });
 
-client.on('guildMemberRemove', (member) => {
+client.on("guildMemberRemove", (member) => {
   log.normal(
     `\nA member left.\nWith username: ${member.user.username}\nWith tag: ${member.user.tag}\nWith ID: ${member.id}\nJoined at: ${member.joinedAt}`,
-    true
+    true,
   );
 });
 
@@ -103,17 +104,21 @@ if (config.Boolean.Enable_NewThread_Event) {
   log.normal('Starting "newThread" event.');
 }
 if (config.Boolean.Enable_LatestActivity_Event) {
-  activity.checker('https://www.panda-community.com/whats-new/latest-activity');
+  activity.checker("https://www.panda-community.com/whats-new/latest-activity");
   log.normal('Starting "latestActivity" event.');
 }
 if (config.Boolean.Enable_CheckComm_Event) {
-  checkcomm.checker('https://bans.panda-community.com/index.php?p=commslist');
+  checkcomm.checker("https://bans.panda-community.com/index.php?p=commslist");
   log.normal('Starting "checkComm" event.');
 }
 if (config.Boolean.Enable_CheckBans_Event) {
-  checkban.checker('https://bans.panda-community.com/index.php?p=banlist');
+  checkban.checker("https://bans.panda-community.com/index.php?p=banlist");
   log.normal('Starting "checkBan" event.');
 }
+
+require('./private/checkTrialsLoop')();
 //Event end
+
+
 
 client.login(config.General.tokenDiscord);
