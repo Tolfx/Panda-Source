@@ -7,7 +7,6 @@ import request from "request";
 import paths from "../types/paths";
 import { getToken, getID } from "../lib/webhook";
 import config from "../../config.json";
-import discordMessage from "../lib/discordMessager";
 
 let path = paths.LatestActivty;
 let D_Token = getToken(config.Discord.LatestActivity);
