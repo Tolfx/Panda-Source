@@ -102,7 +102,7 @@ export class NormalProfile {
               log.normal('Session has been loaded in the browser');
               msg.edit('Session has been loaded in the browser');
               await page.goto(url, { waitUntil: ['domcontentloaded'] });
-              await page.waitFor(2000);
+              await page.waitForTimeout(2000);
               if (page.url() !== 'https://steamcommunity.com/id/Tolfx/edit/info') {
                 msg.edit('Login to steam..');
                 steam.login(page).then(async (data) => {
@@ -142,7 +142,7 @@ export class NormalProfile {
 
   private async NormalProfileChange(page) {
     // This changes name
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
     await page.focus(
       '#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > form > div:nth-child(11) > div.profileedit_ProfileBoxContent_3s6BB > div:nth-child(1) > label > div.DialogInput_Wrapper._DialogLayout > input'
     );
@@ -153,19 +153,19 @@ export class NormalProfile {
     await page.keyboard.type('Tolfx');
 
     // Waits for 2 sec
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
 
     // Clicks on save
     await page.click(
       '#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > form > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary'
     );
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
 
     // Clicks on avatar
     await page.click(
       '#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_Navigation_33Kl1 > a:nth-child(2)'
     );
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
 
     const [fileChooser] = await Promise.all([
       page.waitForFileChooser(),
@@ -175,12 +175,12 @@ export class NormalProfile {
     ]);
 
     await fileChooser.accept([config.profilePicturePath]);
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
 
     // Clicks on Save
     await page.click(
       `#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.profileedit_SaveCancelButtons_2KJ8a > button.DialogButton._DialogLayout.Primary`
     );
-    await page.waitFor(2000);
+    await page.waitForTimeout(2000);
   }
 } //End of class
