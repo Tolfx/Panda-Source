@@ -22,7 +22,7 @@ export class getUserSteam {
       let sid = new steamID(result.steamID64);
       message.channel.send(
         embed
-        .setAuthor(result.custom, result.avatar)
+        .setAuthor(result.custom != "" ? result.custom : result.currentName, result.avatar)
         .setDescription(stripIndents`
           **SteamID:** ${sid.getSteam2RenderedID()}
           **SteamID32:** ${sid.getSteam3RenderedID()}
@@ -30,7 +30,9 @@ export class getUserSteam {
           
           **Privacy:** ${result.privacy}
           **Joined:** ${result.joined}
-          **Status:** ${result.onlineState}`)
+          **Status:** ${result.onlineState}
+          
+          [URL](${result.url})`)
       );
     });
   }
@@ -64,8 +66,6 @@ export class getUserSteam {
       });
     }
 
-    console.log(pushURL[0].url)
-
     request(
       {
         url: `${pushURL[0].url}`,
@@ -83,6 +83,7 @@ export class getUserSteam {
               let custom = result.profile.customURL[0];
               let joined = result.profile.memberSince[0];
               let onlineState = result.profile.onlineState[0];
+              let currentName = result.profile.steamID[0];
 
               callback(null, {
                 steamID64,
@@ -91,6 +92,8 @@ export class getUserSteam {
                 custom,
                 joined,
                 onlineState,
+                url: pushURL[0].url.replace("/?xml=1", ""),
+                currentName
               });
             }
           });
