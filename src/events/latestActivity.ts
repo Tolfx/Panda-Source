@@ -74,8 +74,8 @@ export class latestActivity {
 
                   \`msg:\` ${messageidk}
 
-                  \`Link:\` https://www.panda-community.com/${link}
-                  \`Member link:\` https://www.panda-community.com/${user}`,
+                  \`Link:\` https://www.panda-community.com${link}
+                  \`Member link:\` https://www.panda-community.com${user}`,
             );
 
             webhookClient.send("", {
