@@ -24,6 +24,8 @@ export default class monitorTrail {
   private SourceBanID: Number;
   private commsAmount: Number | number | any;
   private bansAmount: Number | number | any;
+  private currentSession: Date;
+  private lastSession: Date;
 
   /**
    * @param steamID The steamID of the player
@@ -188,6 +190,7 @@ export default class monitorTrail {
 
                       //If the trial isnt marked as "online" then mark him
                       } else {
+                        this.currentSession = new Date
                         this.lastServer = server.name;
                         this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
                         callback(`${name} joined ${server.name}`, true);
@@ -204,6 +207,8 @@ export default class monitorTrail {
 
                     //If the player isn't online but was marked online then return this
                     if (this.isOnlineCheck && fails.length === this.Server.length) {
+                      this.lastSession = this.currentSession;
+                      this.currentSession = new Date;
                       callback(`${name} left`, true);
                       this.isOnlineCheck = false;
                       resolve("left");
@@ -229,6 +234,17 @@ export default class monitorTrail {
     });
   }
 
+  public sessionLasted() {
+    const session = new Date((this.currentSession.valueOf() - this.lastSession.valueOf()).toString());
+    const dateObject = {
+      hours: session.getHours(),
+      minutes: session.getMinutes(),
+      seconds: session.getSeconds()
+    }
+
+    return dateObject;
+  }
+
   /**
    * @description Shows where the trial was last online.
    */
@@ -248,9 +264,7 @@ export default class monitorTrail {
   /**
    *
    * @param body The message the mentor will recive
-   * @param footer The footer
    * @param mention Whatever they should get mentioned or not [true | false]
-   * @param color The color of the webhook
    */
   public noticeMentor(body: embededWebhook, mention: Boolean): void {
     if (mention) {
