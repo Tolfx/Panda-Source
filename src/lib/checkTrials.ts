@@ -234,15 +234,28 @@ export default class monitorTrail {
     });
   }
 
+  /**
+   * @returns {Session = {
+   * hours,
+   * minutes,
+   * seconds
+   * }}
+   */
   public sessionLasted() {
-    const session = new Date((this.currentSession.valueOf() - this.lastSession.valueOf()).toString());
-    const dateObject = {
-      hours: session.getHours(),
-      minutes: session.getMinutes(),
-      seconds: session.getSeconds()
-    }
+    let session = this.currentSession.getTime() - this.lastSession.getTime();
 
-    return dateObject;
+    let hh = Math.floor(session / 1000 / 60 / 60);
+    session -= hh * 1000 * 60 * 60;
+    let mm = Math.floor(session / 1000 / 60);
+    session -= mm * 1000 * 60;
+    let ss = Math.floor(session / 1000);
+    session -= ss * 1000;
+
+    return {
+      hours: hh,
+      minutes: mm,
+      seconds: ss,
+    }
   }
 
   /**
