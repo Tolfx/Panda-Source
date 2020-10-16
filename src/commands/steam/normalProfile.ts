@@ -168,7 +168,7 @@ export class NormalProfile {
     await page.waitForTimeout(2000);
 
     const [fileChooser] = await Promise.all([
-      page.waitForFileChooser(),
+      page.waitForTimeoutFileChooser(),
       page.click(
         '#application_root > div.profileeditshell_Shell_2kqKZ > div.profileeditshell_PageContent_23XE6 > div > div.avatar_AvatarDialogBody_39Ovv > div.avatar_AvatarDialogTop_aCrGP > div.avatar_AvatarDialogUploadArea_22Ena > button'
       ),
