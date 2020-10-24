@@ -113,9 +113,9 @@ export default class monitorTrail {
    * @param callback The message it returns, from the trial
    * @description Checks if the user is online on the server they are asigned too.
    */
-  public isOnline(callback?): Promise<Boolean | String> {
+  public isOnline(callback?, checkForNewServer: Boolean = true): Promise<Boolean | String> {
     return new Promise(async (resolve, reject) => {
-      
+
       //The end point for steam
       const endPoint = "/?xml=1";
 
@@ -173,7 +173,7 @@ export default class monitorTrail {
                       if (this.isOnlineCheck) {
 
                         //If the trail joined a new server
-                        if (this.lastServer != server.name) {
+                        if (this.lastServer != server.name && checkForNewServer) {
                           this.lastServer = server.name;
                           this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
                           callback(`${name} joined a new server: ${server.name}`, true);
