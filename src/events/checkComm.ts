@@ -7,7 +7,6 @@ import { WebhookClient, MessageEmbed } from 'discord.js';
 import fs from 'fs';
 const { stripIndents } = require('common-tags');
 import { CustomLogger } from '../lib/customLogs';
-import cheerio from 'cheerio';
 import request from 'request';
 import paths from '../types/paths';
 import { getToken, getID } from '../lib/webhook';
@@ -40,98 +39,17 @@ export default class CheckComm {
     });
   }
 
-  private newComms($) {
-    let A_storingData = [];
-    let count = 1;
-    for (var i = 2; i < 40; ++i) {
-
-      let name = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i - 1 + count
-        }) > td:nth-child(3) > div:nth-child(1)`
-      ).text().trim();
-      
-      let steamID = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(3) > td:nth-child(2)`
-      ).text().trim();
-
-      let invoked = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(6) > td:nth-child(2)`
-      ).text().trim();
-
-      let length = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(7) > td:nth-child(2)`
-      ).text().trim();
-
-      let reason = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(9) > td:nth-child(2)`
-      ).text().trim();
-
-      let admin = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(10) > td:nth-child(2)`
-      ).text().trim();
-
-      let server = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(11) > td:nth-child(2)`
-      ).attr('id');
-
-      let totaBlocks = $(
-        `#banlist > table > tbody > tr:nth-child(${
-          i + count
-        }) > td > div > table > tbody > tr:nth-child(12) > td:nth-child(2)`
-      ).text().trim();
-
-      let type: String | Boolean = $(`#banlist > table > tbody > tr:nth-child(${count*2}) td:nth-child(1)`)
-      .html();
-      type = type.toString().includes("class=\"fas fa-comment-slash fa-lg\"")
-
-      const Checker = JSON.parse(fs.readFileSync(path, "utf8"));
-
-      if (server === undefined) {
-        server = 'Web Ban';
-      }
-
-      let objectJson = {
-        TotalBans: totaBlocks,
-        NameOfUser: name,
-        BanLength: length,
-        Admin: admin,
-        SteamID: steamID,
-        Reason: reason,
-        Server: server,
-        Invoked: invoked,
-        Type: type
-      };
-
-      if (objectJson.Invoked !== Checker.Invoked) {
-        A_storingData.push(objectJson);
-        ++count;
-        continue;
-      } else {
-        return A_storingData;
-      }
-    }
-  }
-
+  /**
+   * @description Gets the new comms
+   * @param $ The raw HTML from sourceban
+   */
   private improvedNewComms($) {
     const { JSDOM } = jsdom;
     const DOM = new JSDOM($);
     let A_storingData = [];
     const list = DOM.window.document.querySelector(`#banlist > table > tbody`);
     for (let i = 2; i < list.children.length; i++) {
-      if(list.children[i].children[0].children[0].children[0].children[0].length === 13) 
+      if(list.children[i].children[0].children[0].children[0].children[0].length === 14) 
         {
           let type: String | jsdom = list.children[i-1].children[0].innerHTML.includes("class=\"fas fa-comment-slash fa-lg\"");
           let name: String = list.children[i].children[0].children[0].children[0].children[0].children[1].textContent.replace("Player", "").trim();
@@ -248,6 +166,7 @@ export default class CheckComm {
                 **Name of user:** \`${result[j].NameOfUser}\`
                 **SteamID:** \`${result[j].SteamID}\`
                 **Length:** \`${result[j].BanLength}\`
+                **Expires:** \`${result[j].Expires}\`
                 **Reason:** \`${result[j].Reason}\`
                 
                 **Admin:** \`${result[j].Admin}\`
@@ -262,6 +181,7 @@ export default class CheckComm {
                 **Name of user:** \`${result[j].NameOfUser}\`
                 **SteamID:** \`${result[j].SteamID}\`
                 **Length:** \`${result[j].BanLength}\`
+                **Expires:** \`${result[j].Expires}\`
                 **Reason:** \`${result[j].Reason}\`
                 
                 **Admin:** \`${result[j].Admin}\`
