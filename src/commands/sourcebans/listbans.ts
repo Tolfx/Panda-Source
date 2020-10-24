@@ -3,7 +3,6 @@ import { stripIndents } from 'common-tags';
 import config from '../../../config.json';
 import request from "request";
 import * as jsdom from "jsdom";
-const ascii = require("ascii-table");
 
 export default class listbans {
   //Main function to start the command.
