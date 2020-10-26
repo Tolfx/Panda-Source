@@ -66,7 +66,7 @@ export default class listbans {
             ++i
           } else {
             let type: String | jsdom = list.children[i-1].children[0].innerHTML.includes("class=\"fas fa-comment-slash fa-lg\"");
-            let name: String = list.children[i].children[0].children[0].children[0].children[0].children[1].textContent.replace("Player", "").trim();
+            let name: String = list.children[i].children[0].children[0].children[0].children[0].children[1].textContent.replace("Player", "").replace("No Demos", "").trim();
             let steamID: String = list.children[i].children[0].children[0].children[0].children[0].children[2].textContent.replace("Steam ID", "").trim();
             let steamID32: String = list.children[i].children[0].children[0].children[0].children[0].children[3].textContent.replace("Steam3 ID", "").trim();
             let steamID64: String = list.children[i].children[0].children[0].children[0].children[0].children[4].textContent.replace("Steam Community", "").trim();
@@ -74,7 +74,7 @@ export default class listbans {
             let length: String = list.children[i].children[0].children[0].children[0].children[0].children[6].textContent.replace("Banlength", "").trim();
             let expires: String = list.children[i].children[0].children[0].children[0].children[0].children[7].textContent.replace("Expires on", "").trim();
             let reason: String = list.children[i].children[0].children[0].children[0].children[0].children[8].textContent.replace("Reason", "").trim();
-            let admin: String = list.children[i].children[0].children[0].children[0].children[0].children[9].textContent.replace("Blocked by Admin", "").trim();
+            let admin: String = list.children[i].children[0].children[0].children[0].children[0].children[9].textContent.replace("Banned by Admin", "").trim();
             let server: String = list.children[i].children[0].children[0].children[0].children[0].children[10].textContent.replace("Blocked from", "").trim();
             let totalBlocks: String = list.children[i].children[0].children[0].children[0].children[0].children[11].textContent.replace("Total Bans", "").trim();
             bansList.push({
