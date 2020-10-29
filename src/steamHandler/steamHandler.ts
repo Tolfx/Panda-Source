@@ -1,5 +1,7 @@
 import SteamTotp from 'steam-totp';
 import config from '../../config.json';
+const SteamCommunity = require('steamcommunity');
+let community = new SteamCommunity();
 /*
 
 This code logs into steam, explains it self i hope.
@@ -7,7 +9,95 @@ Works with puppeteer package, won't work without it.
 
 */
 
-export default class SteamLogin {
+interface settingsProfile {
+  name?
+  realName?
+  summar?
+  country?
+  state?
+  city?
+  customURL?
+}
+
+interface settingsPrivacy {
+  profile?: 1 | 2 | 3
+  comments?: 1 | 2 | 3
+  inventory?: 1 | 2 | 3
+  inventoryGifts?: Boolean
+  gameDetails?: 1 | 2 | 3
+  playtime?: Boolean
+  friendsList?: 1 | 2 | 3
+}
+
+export function newLogin() {
+  return new Promise((resolve, reject) => {
+    const loginDetailsSteam = {
+      "accountName": config.Steam.name,
+      "password": config.Steam.password,
+      "steamguard": getKey(),  
+      "twoFactorCode": getKey(),
+      "disableMobile": true
+    }
+    
+    community.login(loginDetailsSteam, (err, sessionID, cookies, steamguard, oauth) => {
+      if (err) 
+        reject(err)
+      
+      community.setCookies(cookies)
+
+      resolve({
+        sessionID,
+        cookies,
+        steamguard,
+        oauth
+      });
+    });
+  });
+
+};
+
+export function editProfileUser(settings: settingsProfile) {
+  return new Promise((resolve, reject) => {    
+    community.editProfile(settings, (err) => {
+      if (err)
+        reject(err)
+
+      resolve(true)
+    });
+  });
+}
+
+export function changeAvatar(image: Buffer | String | URL): Promise<URL> {
+  return new Promise((resolve, reject) => {
+    community.uploadAvatar(image, (err, url) => {
+      if (err)
+        reject(err)
+      
+      resolve(url)
+    });
+  });
+}
+
+export function privacySettings(settings: settingsPrivacy) {
+  return new Promise((resolve, reject) => {
+    community.profileSettings(settings, (err) => {
+      if (err)
+        reject(err)
+      
+      resolve(true)
+    })
+  })
+}
+
+function getKey() {
+  let code = SteamTotp.getAuthCode(config.Steam.sharedSecret);
+  return code;
+}
+/**
+ * @deprecated Old class
+ */
+export class SteamLogin {
+
   public async login(page): Promise<boolean> {
     try {
       //Types the users account information.
