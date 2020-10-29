@@ -156,7 +156,7 @@ export default class monitorTrail {
                 ).catch((r) => fails.push(`Failed to get information from server from trial ${name}`,));
 
                 //If there are none players give a fail to push.
-                if (server.players.length === 0) {
+                if (typeof server === "undefined" || server.players.length === 0) {
                   fails.push(1)
                 }
 
