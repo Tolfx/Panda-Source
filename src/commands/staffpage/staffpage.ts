@@ -7,8 +7,8 @@ This logs into the staff page, which i will use someday maybe.
 import config from '../../../config.json';
 const puppeteer = require('puppeteer');
 import fs from 'fs';
-import Steam from '../../steamHandler/steamHandler';
-const steam = new Steam();
+import { SteamLogin, editProfileUser } from '../../steamHandler/steamHandler';
+const steam = new SteamLogin();
 import paths from '../../types/paths';
 
 const options = {

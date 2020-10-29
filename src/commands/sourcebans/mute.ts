@@ -3,7 +3,7 @@
 This code will gag an user. lol
 
 */
-import steam from '../../steamHandler/steamHandler';
+import {SteamLogin} from '../../steamHandler/steamHandler';
 const puppeteer = require('puppeteer');
 import config from '../../../config.json';
 import fs from 'fs';
@@ -14,7 +14,7 @@ import { CommandParser } from '../../lib/commandParser';
 
 const log = new CustomLogger();
 
-const Steam = new steam();
+const Steam = new SteamLogin();
 let path = 'cookies_Sourceban.json';
 
 const options = {
