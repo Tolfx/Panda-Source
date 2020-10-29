@@ -50,15 +50,17 @@ import { commandHandler } from "./commands/commandHandler";
 import { newThread } from "./events/newThread";
 import { latestActivity } from "./events/latestActivity";
 import CheckComm from "./events/checkComm";
-
 import config from "../config.json";
 import mongoose from "mongoose";
+import {newLogin, editProfileUser} from "./steamHandler/steamHandler"
 
 mongoose.connect(config.General.MongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
+
+newLogin()
 
 const prefix = config.General.prefix;
 
