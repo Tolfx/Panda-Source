@@ -3,19 +3,20 @@
 Makes me undercover
 
 */
-import Steam from '../../steamHandler/steamHandler';
+import {SteamLogin, editProfileUser, changeAvatar, privacySettings} from '../../steamHandler/steamHandler';
 const puppeteer = require('puppeteer');
 import config from '../../../config.json';
 import fs from 'fs';
 import { CustomLogger } from '../../lib/customLogs';
-import { steamPrivacy } from '../../steamHandler/privacy';
 import paths from '../../types/paths';
 
 const log = new CustomLogger();
-const privacy = new steamPrivacy();
 
-const steam = new Steam();
+const steam = new SteamLogin();
 
+/**
+ * @deprecated
+ */
 const options = {
   args: [
     '--no-sandbox',
@@ -31,9 +32,36 @@ const options = {
 
 export class UnderCover {
   public run(client, message, args) {
-    this.underCover(client, message, args);
+    this.undercoverNew(client, message, args);
   }
 
+  private undercoverNew(client, message, args) {
+    let name;
+    let randomNames = config.names;
+    let answer = Math.floor(Math.random() * randomNames.length);
+    name = randomNames[answer];
+
+    let randomProfilePic = Math.floor(Math.random() * config.numberOfPics);
+
+    editProfileUser({
+      name: name
+    }).then(d => {
+      changeAvatar(config.underCoverProfile + randomProfilePic + '.png').catch(e => log.warn(e));
+      privacySettings({
+        profile: 1
+      }).catch(e => log.warn(e));
+
+      message.channel.send('Done');
+    }).catch(e => log.warn(e));
+  }
+
+  /**
+   * 
+   * @param client 
+   * @param message 
+   * @param args 
+   * @deprecated
+   */
   private async underCover(client, message, args) {
     if (message.author.id !== config.General.discord_Owner_ID)
       return message.channel.send('Not owner.');
@@ -138,12 +166,23 @@ export class UnderCover {
     });
   }
 
+  /**
+   * 
+   * @param page 
+   * @param path 
+   * @deprecated
+   */
   private async saveCookies(page, path) {
     const cookiesObject = await page.cookies();
     fs.writeFileSync(path, JSON.stringify(cookiesObject));
     log.normal('Session has been saved to ' + path);
   }
 
+  /**
+   * 
+   * @param page 
+   * @deprecated
+   */
   private async goUndercover(page) {
     let name;
     let randomNames = config.names;
