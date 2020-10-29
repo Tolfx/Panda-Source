@@ -3,7 +3,7 @@
 This will make my profile normal again..
 
 */
-import Steam from '../../steamHandler/steamHandler';
+import {SteamLogin, editProfileUser, changeAvatar, privacySettings} from '../../steamHandler/steamHandler';
 import config from '../../../config.json';
 const puppeteer = require('puppeteer');
 import fs from 'fs';
@@ -11,8 +11,11 @@ import { CustomLogger } from '../../lib/customLogs';
 import paths from '../../types/paths';
 
 const log = new CustomLogger();
-const steam = new Steam();
+const steam = new SteamLogin();
 
+/**
+ * @deprecated
+ */
 const options = {
   args: [
     '--no-sandbox',
@@ -27,9 +30,28 @@ const options = {
 };
 export class NormalProfile {
   public run(client, message, args) {
-    this.normalProfile(client, message, args);
+    this.normalProfileNew(client, message, args);
   }
 
+  private normalProfileNew(client, message, args) {
+    if (message.author.id !== config.General.discord_Owner_ID)
+      return message.channel.send('Not owner.');
+
+    editProfileUser({name: "Tolfx"}).then(d => {
+      changeAvatar(config.profilePicturePath).catch(e => log.warn(e));
+      privacySettings({
+        profile: 3
+      }).catch(e => log.warn(e));
+      message.channel.send('Done');
+    }).catch(e => log.warn(e));
+  };
+  /**
+   * 
+   * @param client 
+   * @param message 
+   * @param args 
+   * @deprecated Old code
+   */
   private async normalProfile(client, message, args) {
     if (message.author.id !== config.General.discord_Owner_ID)
       return message.channel.send('Not owner.');
@@ -133,13 +155,23 @@ export class NormalProfile {
       }
     });
   }
-
+  /**
+   * 
+   * @param page 
+   * @param path 
+   * @deprecated Old code
+   */
   private async saveCookies(page, path) {
     const cookiesObject = await page.cookies();
     fs.writeFileSync(path, JSON.stringify(cookiesObject));
     log.normal('Session has been saved to ' + path);
   }
 
+  /**
+   * 
+   * @param page 
+   * @deprecated Old code
+   */
   private async NormalProfileChange(page) {
     // This changes name
     await page.waitForTimeout(2000);
