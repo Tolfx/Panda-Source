@@ -32,7 +32,7 @@ export class getUserSteam {
           **Joined:** ${result.joined}
           **Status:** ${result.onlineState}
           
-          [URL](${result.url})`)
+          [Steam Profile URL](${result.url})`)
       );
     });
   }
