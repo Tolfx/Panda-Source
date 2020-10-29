@@ -60,7 +60,9 @@ mongoose.connect(config.General.MongoDB, {
   useCreateIndex: true,
 });
 
-newLogin()
+newLogin().catch(e => {
+  log.warn(`An error accured.. ${e}, failed to login.`)
+})
 
 const prefix = config.General.prefix;
 
