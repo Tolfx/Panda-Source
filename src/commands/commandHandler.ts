@@ -15,7 +15,6 @@ import { whoIsPlaying } from '../commands/hlstatsx/whoIsPlaying';
 import { UnderCover } from '../commands/steam/undercover';
 import { NormalProfile } from '../commands/steam/normalProfile';
 import { getUserSteam } from '../commands/steam/getUser';
-import { DetectInsults } from './hlstatsx/insults';
 import { sourceGag } from '../commands/sourcebans/gag';
 import { sourceMute } from '../commands/sourcebans/mute';
 import { sourceSilence } from '../commands/sourcebans/silence';
@@ -25,10 +24,8 @@ import { Hug } from '../commands/fun/hug';
 import { Kiss } from '../commands/fun/kiss';
 import { eightBall } from '../commands/fun/8ball';
 import { Format } from '../commands/info/format';
-import { TrainBrain } from '../commands/brain/train';
 
 //Modules / classes
-let train = new TrainBrain();
 let Listcomms = new listcomms();
 let Listbans = new listbans();
 let topten = new topTen();
@@ -37,7 +34,6 @@ let staffpage = new staffPage();
 let whoisplaying = new whoIsPlaying();
 let undercover = new UnderCover();
 let normalprofile = new NormalProfile();
-let check = new DetectInsults();
 let gag = new sourceGag();
 let mute = new sourceMute();
 let silence = new sourceSilence();
@@ -71,8 +67,6 @@ export class commandHandler {
       undercover.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}normal`)) {
       normalprofile.run(client, message, args);
-    } else if (message.content.includes(`${config.General.prefix}check`)) {
-      check.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}gag`)) {
       gag.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}mute`)) {
@@ -91,8 +85,6 @@ export class commandHandler {
       format.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}8ball`)) {
       ball.run(client, message, args);
-    } else if (message.content.includes(`${config.General.prefix}train`)) {
-      train.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}steamid`)) {
       getuserid.run(client, message, args);
     } else {
