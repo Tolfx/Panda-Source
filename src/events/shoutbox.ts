@@ -7,10 +7,10 @@ import config from '../../config.json';
 import cheerio from 'cheerio';
 import { WebhookClient, MessageEmbed } from 'discord.js';
 import { getToken, getID } from '../lib/webhook';
-import Steam from '../steamHandler/steamHandler';
+import { SteamLogin } from '../steamHandler/steamHandler';
 import paths from '../types/paths';
 
-const steam = new Steam();
+const steam = new SteamLogin();
 
 let url = 'https://www.panda-community.com/shoutbox/fullpage';
 let path = paths.C_Shoutbox;

@@ -11,7 +11,6 @@ import { CustomLogger } from '../../lib/customLogs';
 import paths from '../../types/paths';
 
 const log = new CustomLogger();
-
 const steam = new SteamLogin();
 
 /**
