@@ -1,0 +1,12 @@
+POST https://steamid.io/lookup/
+Content-Type: text/html
+
+{
+    "input": "https://steamcommunity.com/id/k-gorl"
+}
+
+###
+POST https://steamid.io/lookup/76561197966516470
+
+###
+POST https://bans.panda-community.com/index.php?p=commslist&advSearch=703&advType=admin
