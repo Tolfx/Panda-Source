@@ -2,7 +2,7 @@
 
 When life goes dark.. execute this to end all racism on panda.tf
 
-*/
+
 import request from 'request';
 import cheerio from 'cheerio';
 import puppeter from 'puppeteer';
@@ -13,7 +13,6 @@ const { stripIndents } = require('common-tags');
 import paths from '../types/paths';
 import { getToken, getID } from '../lib/webhook';
 import config from '../../config.json';
-import * as checker from '@tensorflow-models/toxicity';
 
 let final = [];
 const log = new CustomLogger();
@@ -32,7 +31,7 @@ interface options {
  *
  * @param options URL, ID, sec
  * @param callback Result(s)
- */
+
 export function endRacism(options: options, callback: (err: null | Error, result?: any) => void) {
   //Errors for safety;
   if (!options.URL) return callback(new Error('No URL was provided'));
@@ -158,3 +157,4 @@ function newChat($) {
     }
   }
 }
+*/
