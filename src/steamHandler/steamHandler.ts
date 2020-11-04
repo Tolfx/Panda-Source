@@ -2,6 +2,8 @@ import SteamTotp from 'steam-totp';
 import config from '../../config.json';
 const SteamCommunity = require('steamcommunity');
 let community = new SteamCommunity();
+import { CustomLogger } from "../lib/customLogs";
+const log = new CustomLogger();
 /*
 
 This code logs into steam, explains it self i hope.
@@ -44,13 +46,15 @@ export function newLogin() {
         reject(err)
       
       community.setCookies(cookies)
-
+      log.debug(`Setting cookies into steam...`)
       resolve({
         sessionID,
         cookies,
         steamguard,
         oauth
       });
+
+      log.debug(`Succesfully logged into steam`)
     });
   });
 
