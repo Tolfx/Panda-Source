@@ -3,7 +3,8 @@
       "prefix": "!",
       "discord_Owner_ID": "",
       "tokenDiscord": "",
-      "MongoDB": ""
+      "MongoDB": "",
+      "HlstatXURL": ""
     },
   
     "Discord": {
