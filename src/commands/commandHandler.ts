@@ -20,6 +20,7 @@ import { sourceMute } from '../commands/sourcebans/mute';
 import { sourceSilence } from '../commands/sourcebans/silence';
 import { sourceBan } from '../commands/sourcebans/ban';
 import { Purge } from '../commands/moderation/purge';
+import { Restart } from '../commands/moderation/restart';
 import { Hug } from '../commands/fun/hug';
 import { Kiss } from '../commands/fun/kiss';
 import { eightBall } from '../commands/fun/8ball';
@@ -44,6 +45,7 @@ let kiss = new Kiss();
 let ball = new eightBall();
 let format = new Format();
 let getuserid = new getUserSteam();
+let restart = new Restart();
 
 export class commandHandler {
   public run(client, message, args) {
@@ -87,6 +89,8 @@ export class commandHandler {
       ball.run(client, message, args);
     } else if (message.content.includes(`${config.General.prefix}steamid`)) {
       getuserid.run(client, message, args);
+    } else if (message.content.includes(`${config.General.prefix}restart`)) {
+      restart.run(client, message, args);
     } else {
       return;
     }
