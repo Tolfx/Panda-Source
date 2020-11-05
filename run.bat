@@ -5,7 +5,7 @@ git pull
 echo Done!
 echo Building app...
 start build.bat
-TIMEOUT 10
+TIMEOUT 12
 echo Done!
 echo Starting bot...
 node ./dist/src/index
