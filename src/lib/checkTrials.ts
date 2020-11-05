@@ -6,6 +6,7 @@ import { WebhookClient, MessageEmbed } from "discord.js";
 import cheerio from "cheerio";
 import { embededWebhook } from "../interfaces/webhooks"
 const parseString = require("xml2js").parseString;
+import { getGameURL, getPlayerURL, isPlaying } from "../hlstatsx/hlstatxHandler"
 
 interface ServerInterface {
   IP: String;
@@ -26,6 +27,8 @@ export default class monitorTrail {
   private bansAmount: Number | number | any;
   private currentSession: Date;
   private lastSession: Date;
+  private playerQuery: String;
+  private gameQuery: String;
 
   /**
    * @param steamID The steamID of the player
@@ -169,35 +172,48 @@ export default class monitorTrail {
                     //If we find the trail continue
                     if (server.players[i].name === name) {
 
-                      //If he is already marked as "Online"
-                      if (this.isOnlineCheck) {
+                      if(typeof this.playerQuery != "undefined") {
 
-                        //If the trail joined a new server
-                        if (this.lastServer != server.name && checkForNewServer) {
-                          this.lastServer = server.name;
-                          this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
-                          callback(`${name} joined a new server: ${server.name}`, true);
-                          resolve(true);
-                          break;
-
-                        //Already in game
-                        } else {
-                          this.lastServer = server.name;
-                          callback(`${name} already in game`, true);
-                          resolve(false);
-                          break;
-                        }
-
-                      //If the trial isnt marked as "online" then mark him
-                      } else {
-                        this.currentSession = new Date
-                        this.lastServer = server.name;
-                        this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
-                        callback(`${name} joined ${server.name}`, true);
-                        this.isOnlineCheck = true;
-                        resolve(true);
-                        break;
+                        getGameURL(server.name).then(gameURL => {
+                          if(typeof gameURL === "string") {
+                            this.gameQuery = gameURL;
+                            getPlayerURL(gameURL, this.TrailID).then(playerURL => {
+                              this.playerQuery = playerURL
+                              isPlaying(gameURL, playerURL).then(online => {
+                                if(online) {
+                                  this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                                } else {
+                                  callback(`${name} seems to be an imposter in server: ${server.name}`, true);
+                                  resolve(true);
+                                }
+                              }).catch(r => {
+                                this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                                callback(r)
+                              });
+                            }).catch(r => {
+                              this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                              callback(r)
+                            });
+                          } else {
+                            this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                          }
+                        }).catch(r =>  {
+                          this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                          callback(r)
+                        });
                       }
+                    } else {
+                      isPlaying(this.gameQuery, this.playerQuery).then(online => {
+                        if(online) {
+                          this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                        } else {
+                          callback(`${name} seems to be an imposter in server: ${server.name}`, true);
+                          resolve(true);
+                        }
+                      }).catch(r => {
+                        this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                        callback(r)
+                      });
                     }
                     
                     //Push to fail if we didn't find the player in the array.
@@ -232,6 +248,34 @@ export default class monitorTrail {
         },
       );
     });
+  }
+
+  private messanger(server, checkForNewServer, callback, resolve, connect, x) {
+    if (this.isOnlineCheck) {
+
+      //If the trail joined a new server
+      if (this.lastServer != server.name && checkForNewServer) {
+        this.lastServer = server.name;
+        this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
+        callback(`${name} joined a new server: ${server.name}`, true);
+        resolve(true);
+
+      //Already in game
+      } else {
+        this.lastServer = server.name;
+        callback(`${name} already in game`, true);
+        resolve(false);
+      }
+
+    //If the trial isnt marked as "online" then mark him
+    } else {
+      this.currentSession = new Date
+      this.lastServer = server.name;
+      this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
+      callback(`${name} joined ${server.name}`, true);
+      this.isOnlineCheck = true;
+      resolve(true);
+    }
   }
 
   /**
