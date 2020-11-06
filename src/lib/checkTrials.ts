@@ -29,6 +29,7 @@ export default class monitorTrail {
   private lastSession: Date;
   private playerQuery: String;
   private gameQuery: String;
+  private markedDone: Boolean;
 
   /**
    * @param steamID The steamID of the player
@@ -159,7 +160,7 @@ export default class monitorTrail {
                 ).catch((r) => fails.push(`Failed to get information from server from trial ${name}`,));
 
                 //If there are none players give a fail to push.
-                if (typeof server === "undefined" || server.players.length === 0) {
+                if (typeof server === "undefined" || typeof server.players === "undefined" || server.players.length === 0) {
                   fails.push(1)
                 }
 
@@ -171,8 +172,8 @@ export default class monitorTrail {
 
                     //If we find the trail continue
                     if (server.players[i].name === name) {
-
-                      if(typeof this.playerQuery != "undefined") {
+                      console.log(this.playerQuery);
+                      if(typeof this.gameQuery === "undefined") {
 
                         getGameURL(server.name).then(gameURL => {
                           if(typeof gameURL === "string") {
@@ -181,39 +182,41 @@ export default class monitorTrail {
                               this.playerQuery = playerURL
                               isPlaying(gameURL, playerURL).then(online => {
                                 if(online) {
-                                  this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                                  this.messanger(server, checkForNewServer, callback, resolve, connect, x,  name)
                                 } else {
                                   callback(`${name} seems to be an imposter in server: ${server.name}`, true);
                                   resolve(true);
                                 }
                               }).catch(r => {
-                                this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                                this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                                 callback(r)
                               });
                             }).catch(r => {
-                              this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                              this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                               callback(r)
                             });
                           } else {
-                            this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                            this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                           }
                         }).catch(r =>  {
-                          this.messanger(server, checkForNewServer, callback, resolve, connect, x)
+                          this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                           callback(r)
                         });
+                        break;
+                      } else {
+                        isPlaying(this.gameQuery, this.playerQuery).then(online => {
+                          if(online) {
+                            this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                          } else {
+                            callback(`${name} seems to be an imposter in server: ${server.name}`, true);
+                            resolve(true);
+                          }
+                        }).catch(r => {
+                          this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                          callback(r)
+                        });
+                        break;
                       }
-                    } else {
-                      isPlaying(this.gameQuery, this.playerQuery).then(online => {
-                        if(online) {
-                          this.messanger(server, checkForNewServer, callback, resolve, connect, x)
-                        } else {
-                          callback(`${name} seems to be an imposter in server: ${server.name}`, true);
-                          resolve(true);
-                        }
-                      }).catch(r => {
-                        this.messanger(server, checkForNewServer, callback, resolve, connect, x)
-                        callback(r)
-                      });
                     }
                     
                     //Push to fail if we didn't find the player in the array.
@@ -250,7 +253,7 @@ export default class monitorTrail {
     });
   }
 
-  private messanger(server, checkForNewServer, callback, resolve, connect, x) {
+  private messanger(server, checkForNewServer, callback, resolve, connect, x, name) {
     if (this.isOnlineCheck) {
 
       //If the trail joined a new server
@@ -259,7 +262,7 @@ export default class monitorTrail {
         this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
         callback(`${name} joined a new server: ${server.name}`, true);
         resolve(true);
-
+        this.markedDone = true;
       //Already in game
       } else {
         this.lastServer = server.name;
@@ -275,6 +278,7 @@ export default class monitorTrail {
       callback(`${name} joined ${server.name}`, true);
       this.isOnlineCheck = true;
       resolve(true);
+      this.markedDone = true;
     }
   }
 
