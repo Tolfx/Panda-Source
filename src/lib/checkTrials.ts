@@ -172,7 +172,6 @@ export default class monitorTrail {
 
                     //If we find the trail continue
                     if (server.players[i].name === name) {
-                      console.log(this.playerQuery);
                       if(typeof this.gameQuery === "undefined") {
 
                         getGameURL(server.name).then(gameURL => {

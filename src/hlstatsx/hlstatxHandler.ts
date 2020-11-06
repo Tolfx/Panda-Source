@@ -35,7 +35,6 @@ export function getGameURL(serverName): Promise<String | Boolean> {
                     console.log(`${names} === ${serverName}`)
                     if(names === serverName) {
                         serverURL = serverURL.replace("/hlstats.php?", "")
-                        log.debug(serverURL);
                         resolve(`${serverURL}`);
                     };
 
@@ -79,8 +78,6 @@ export function getPlayerURL(gameQuery, steamID): Promise<String> {
 
 export function isPlaying(gameQuery, playerQuery) {
     return new Promise((resolve, reject) => {
-        resolve(false)
-        /*
         request(hlstatxURL+"?"+gameQuery, (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 const { JSDOM } = jsdom;
@@ -103,6 +100,5 @@ export function isPlaying(gameQuery, playerQuery) {
                 reject(`An error accured while doing an request to ${hlstatxURL+"?"+gameQuery} with status code: ${response.statusCode}`);
             };
         });
-        */
     });
 };
