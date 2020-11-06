@@ -17,19 +17,25 @@ const DOM = new JSDOM($);
  * @param serverName The server name.
  */
 export function getGameURL(serverName): Promise<String | Boolean> {
+    //if(serverName.includes("Panda-Community.com #13 | Freak Fortress 2"))
+    serverName = serverName.split(/\|/g).slice(0, 2).join("|")
+    
     return new Promise((resolve, reject) => {
         request(hlstatxURL, (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 const { JSDOM } = jsdom;
                 const DOM = new JSDOM(body);
 
-                let tbodyChildren = DOM.window.document.querySelector("body > div.content > div:nth-child(4) > table").children;
+                let tbodyChildren = DOM.window.document.querySelector("body > div.content > div:nth-child(4) > table").children[0];
                 
                 for(let i = 1; i < tbodyChildren.children.length; i++) {
-                    let names = tbodyChildren.children[i].children[1].children[0].children[0].innerText;
-                    let serverURL = tbodyChildren.children[0].children[1].children[0].children[0].children[1].attributes[0].value;
+                    //[1].children[0].children[0].textContent
+                    let names = tbodyChildren.children[i].children[0].children[0].textContent;
+                    let serverURL = tbodyChildren.children[i].children[0].children[0].children[1].attributes[0].value;
+                    console.log(`${names} === ${serverName}`)
                     if(names === serverName) {
                         serverURL = serverURL.replace("/hlstats.php?", "")
+                        log.debug(serverURL);
                         resolve(`${serverURL}`);
                     };
 
@@ -73,12 +79,13 @@ export function getPlayerURL(gameQuery, steamID): Promise<String> {
 
 export function isPlaying(gameQuery, playerQuery) {
     return new Promise((resolve, reject) => {
-
+        resolve(false)
+        /*
         request(hlstatxURL+"?"+gameQuery, (error, response, body) => {
             if (!error && response.statusCode == 200) {
                 const { JSDOM } = jsdom;
                 const DOM = new JSDOM(body);
-
+                log.debug(`${gameQuery} | ${playerQuery}`)
                 let table = DOM.window.document.querySelector("body > div.content > div.block > div > table.livestats-table > tbody").children;
 
                 for(let i = 1; i < table.length; i++) {
@@ -96,5 +103,6 @@ export function isPlaying(gameQuery, playerQuery) {
                 reject(`An error accured while doing an request to ${hlstatxURL+"?"+gameQuery} with status code: ${response.statusCode}`);
             };
         });
+        */
     });
 };
