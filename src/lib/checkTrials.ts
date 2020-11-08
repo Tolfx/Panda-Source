@@ -30,6 +30,7 @@ export default class monitorTrail {
   private playerQuery: String;
   private gameQuery: String;
   private markedDone: Boolean;
+  public currentName: String;
 
   /**
    * @param steamID The steamID of the player
@@ -172,6 +173,7 @@ export default class monitorTrail {
 
                     //If we find the trail continue
                     if (server.players[i].name === name) {
+                      this.currentName = server.players[i].name;
                       if(typeof this.gameQuery === "undefined") {
 
                         getGameURL(server.name).then(gameURL => {
