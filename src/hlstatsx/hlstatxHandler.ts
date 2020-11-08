@@ -32,7 +32,6 @@ export function getGameURL(serverName): Promise<String | Boolean> {
                     //[1].children[0].children[0].textContent
                     let names = tbodyChildren.children[i].children[0].children[0].textContent;
                     let serverURL = tbodyChildren.children[i].children[0].children[0].children[1].attributes[0].value;
-                    console.log(`${names} === ${serverName}`)
                     if(names === serverName) {
                         serverURL = serverURL.replace("/hlstats.php?", "")
                         resolve(`${serverURL}`);
