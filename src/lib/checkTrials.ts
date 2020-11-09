@@ -173,14 +173,25 @@ export default class monitorTrail {
 
                     //If we find the trail continue
                     if (server.players[i].name === name) {
-                      this.currentName = server.players[i].name;
+
+                      //So we know which name our admin is using in game.
+                      this.currentName = name;
+
+                      //If we haven't checked their gameQuery.. continue..
                       if(typeof this.gameQuery === "undefined") {
 
+                        //Get the gameURL < can be a issue in the future when there are more than 1.
                         getGameURL(server.name).then(gameURL => {
+
+                          //If string continue kek
                           if(typeof gameURL === "string") {
                             this.gameQuery = gameURL;
+
+                            //Get the players gameURL.
                             getPlayerURL(gameURL, this.TrailID).then(playerURL => {
                               this.playerQuery = playerURL
+
+                              //Check if admin is playing or not.
                               isPlaying(gameURL, playerURL).then(online => {
                                 if(online) {
                                   this.messanger(server, checkForNewServer, callback, resolve, connect, x,  name)
@@ -188,10 +199,14 @@ export default class monitorTrail {
                                   callback(`${name} seems to be an imposter in server: ${server.name}`, true);
                                   resolve(true);
                                 }
+
+                              //Errors for is playing.
                               }).catch(r => {
                                 this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                                 callback(r)
                               });
+
+                            //errors for playerURL
                             }).catch(r => {
                               this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                               callback(r)
@@ -199,11 +214,15 @@ export default class monitorTrail {
                           } else {
                             this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                           }
+                        
+                        //Errors for gameURL
                         }).catch(r =>  {
                           this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
                           callback(r)
-                        });
+                        }); 
                         break;
+                      
+                      //If we got the gameQuery continue here.
                       } else {
                         isPlaying(this.gameQuery, this.playerQuery).then(online => {
                           if(online) {
