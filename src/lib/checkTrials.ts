@@ -173,7 +173,8 @@ export default class monitorTrail {
 
                     //If we find the trail continue
                     if (server.players[i].name === name) {
-
+                      let servername = server.name.split(/\|/g).slice(0, 2).join("|").trim();
+                      console.log(servername + " == " + this.lastServer)
                       //So we know which name our admin is using in game.
                       this.currentName = name;
 
@@ -194,7 +195,7 @@ export default class monitorTrail {
                               //Check if admin is playing or not.
                               isPlaying(gameURL, playerURL).then(online => {
                                 if(online) {
-                                  this.messanger(server, checkForNewServer, callback, resolve, connect, x,  name)
+                                  this.messanger(server, servername, callback, resolve, connect, x,  name)
                                 } else {
                                   callback(`${name} seems to be an imposter in server: ${server.name}`, true);
                                   resolve(true);
@@ -202,22 +203,22 @@ export default class monitorTrail {
 
                               //Errors for is playing.
                               }).catch(r => {
-                                this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                                this.messanger(server, servername, callback, resolve, connect, x, name)
                                 callback(r)
                               });
 
                             //errors for playerURL
                             }).catch(r => {
-                              this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                              this.messanger(server, servername, callback, resolve, connect, x, name)
                               callback(r)
                             });
                           } else {
-                            this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                            this.messanger(server, servername, callback, resolve, connect, x, name)
                           }
                         
                         //Errors for gameURL
                         }).catch(r =>  {
-                          this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                          this.messanger(server, servername, callback, resolve, connect, x, name)
                           callback(r)
                         }); 
                         break;
@@ -226,13 +227,13 @@ export default class monitorTrail {
                       } else {
                         isPlaying(this.gameQuery, this.playerQuery).then(online => {
                           if(online) {
-                            this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                            this.messanger(server, servername, callback, resolve, connect, x, name)
                           } else {
                             callback(`${name} seems to be an imposter in server: ${server.name}`, true);
                             resolve(true);
                           }
                         }).catch(r => {
-                          this.messanger(server, checkForNewServer, callback, resolve, connect, x, name)
+                          this.messanger(server, servername, callback, resolve, connect, x, name)
                           callback(r)
                         });
                         break;
@@ -273,8 +274,7 @@ export default class monitorTrail {
     });
   }
 
-  private messanger(server, checkForNewServer, callback, resolve, connect, x, name) {
-    let servername = server.name.split(/\|/g).slice(0, 2).join("|")
+  private messanger(server, servername, callback, resolve, connect, x, name) {
     if (this.isOnlineCheck) {
       
       //If the trail joined a new server
