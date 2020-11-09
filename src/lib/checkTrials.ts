@@ -255,18 +255,19 @@ export default class monitorTrail {
   }
 
   private messanger(server, checkForNewServer, callback, resolve, connect, x, name) {
+    let servername = server.name.split(/\|/g).slice(0, 2).join("|")
     if (this.isOnlineCheck) {
-
+      
       //If the trail joined a new server
-      if (this.lastServer != server.name && checkForNewServer) {
-        this.lastServer = server.name;
+      if (this.lastServer != servername) {
+        this.lastServer = servername;
         this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
-        callback(`${name} joined a new server: ${server.name}`, true);
+        callback(`${name} joined a new server: ${servername}`, true);
         resolve(true);
         this.markedDone = true;
       //Already in game
       } else {
-        this.lastServer = server.name;
+        this.lastServer = servername;
         callback(`${name} already in game`, true);
         resolve(false);
       }
@@ -274,9 +275,9 @@ export default class monitorTrail {
     //If the trial isnt marked as "online" then mark him
     } else {
       this.currentSession = new Date
-      this.lastServer = server.name;
+      this.lastServer = servername;
       this.connectURL = `${connect}${this.Server[x].IP}:${this.Server[x].Port}`
-      callback(`${name} joined ${server.name}`, true);
+      callback(`${name} joined ${servername}`, true);
       this.isOnlineCheck = true;
       resolve(true);
       this.markedDone = true;
